@@ -60,7 +60,7 @@ enum {
 		
 		// Define the gravity vector.
 		b2Vec2 gravity;
-		gravity.Set(0.0f, -10.0f);
+		gravity.Set(0.0f, 3.0f);
 		
 		// Do we want to let bodies sleep?
 		// This will speed up the physics simulation
@@ -119,8 +119,10 @@ enum {
 		[self addChild:batch z:0 tag:kTagBatchNode];
 		
 		//[self addNewSpriteWithCoords:ccp(screenSize.width/2, screenSize.height/2)];
-        
-        [self addBall];
+        [self addObstacles:ccp(250, 220)];
+        [self addObstacles:ccp(260, 180)];
+        [self addObstacles:ccp(210, 160)];
+        [self addBall:ccp(240, 10)];
 		
 		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Tap screen" fontName:@"Marker Felt" fontSize:32];
 		[self addChild:label z:0];
@@ -185,17 +187,43 @@ enum {
 	body->CreateFixture(&fixtureDef);
 }
 
--(void) addBall {
+-(void) addObstacles:(CGPoint)p {
+    CCLOG(@"");
+	CCSpriteBatchNode *batch = (CCSpriteBatchNode*) [self getChildByTag:kTagBatchNode];
+
+    int idx = (CCRANDOM_0_1() > .5 ? 0:1);
+	int idy = (CCRANDOM_0_1() > .5 ? 0:1);
+	CCSprite *sprite = [CCSprite spriteWithBatchNode:batch rect:CGRectMake(32 * idx,32 * idy,32,32)];
+	[batch addChild:sprite];
+	
+	sprite.position = ccp( p.x, p.y);
+	
+	b2BodyDef bodyDef;
+	//bodyDef.type = b2_dynamicBody;
+    
+	bodyDef.position.Set(p.x/PTM_RATIO, p.y/PTM_RATIO);
+	bodyDef.userData = sprite;
+	b2Body *body = world->CreateBody(&bodyDef);
+	
+	// Define another box shape for our dynamic body.
+	b2PolygonShape dynamicBox;
+	dynamicBox.SetAsBox(.5f, .5f);//These are mid points for our 1m box
+	
+
+	body->CreateFixture(&dynamicBox, 0);
+}
+
+-(void) addBall:(CGPoint)p {
     CCLOG(@"");
     CCSprite *ball = [CCSprite spriteWithFile:@"ball32.png"];
     [self addChild:ball];
     
     CGSize screenSize = [CCDirector sharedDirector].winSize;
-    ball.position = ccp(screenSize.width/2, screenSize.height/2 + 20);
+    ball.position = ccp(p.x, p.y + 20);
     
     b2BodyDef ballBodyDef;
     ballBodyDef.type = b2_dynamicBody;
-    ballBodyDef.position.Set(screenSize.width/2/PTM_RATIO, (screenSize.height/2 + 20)/PTM_RATIO);
+    ballBodyDef.position.Set(p.x/PTM_RATIO, (p.y + 20)/PTM_RATIO);
     ballBodyDef.userData = ball;
     b2Body *ballBody = world->CreateBody(&ballBodyDef);
     
@@ -205,8 +233,8 @@ enum {
     b2FixtureDef ballFixtureDef;
     ballFixtureDef.shape = &ballBox;
     ballFixtureDef.density = .8f;
-    ballFixtureDef.friction = 0.1f;
-    ballFixtureDef.restitution = .8f;
+    ballFixtureDef.friction = 0.4f;
+    ballFixtureDef.restitution = .3f;
     ballBody->CreateFixture(&ballFixtureDef);
         
 }
