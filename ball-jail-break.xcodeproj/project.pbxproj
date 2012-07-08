@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F0E8FA415A9E53300045045 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F0E8FA315A9E53300045045 /* GameKit.framework */; };
 		8F7E402C15A96D9200029126 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7E402B15A96D9200029126 /* QuartzCore.framework */; };
 		8F7E402E15A96D9200029126 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7E402D15A96D9200029126 /* OpenGLES.framework */; };
 		8F7E403015A96D9200029126 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7E402F15A96D9200029126 /* OpenAL.framework */; };
@@ -164,6 +165,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8F0E8FA315A9E53300045045 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		8F7E402715A96D9200029126 /* ball-jail-break.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ball-jail-break.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F7E402B15A96D9200029126 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8F7E402D15A96D9200029126 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -485,6 +487,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F0E8FA415A9E53300045045 /* GameKit.framework in Frameworks */,
 				8F7E402C15A96D9200029126 /* QuartzCore.framework in Frameworks */,
 				8F7E402E15A96D9200029126 /* OpenGLES.framework in Frameworks */,
 				8F7E403015A96D9200029126 /* OpenAL.framework in Frameworks */,
@@ -519,6 +522,7 @@
 		8F7E402A15A96D9200029126 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8F0E8FA315A9E53300045045 /* GameKit.framework */,
 				8F7E402B15A96D9200029126 /* QuartzCore.framework */,
 				8F7E402D15A96D9200029126 /* OpenGLES.framework */,
 				8F7E402F15A96D9200029126 /* OpenAL.framework */,
@@ -1227,6 +1231,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1238,7 +1243,8 @@
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1247,14 +1253,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
 			name = Release;
@@ -1264,6 +1272,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1274,6 +1283,7 @@
 				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				USER_HEADER_SEARCH_PATHS = "\"ball-jail-break/libs\"";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1318,6 +1328,7 @@
 				8F7E421615A96D9500029126 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

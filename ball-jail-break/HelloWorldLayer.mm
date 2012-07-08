@@ -10,6 +10,8 @@
 // Import the interfaces
 #import "HelloWorldLayer.h"
 
+
+
 //Pixel to metres ratio. Box2D uses metres as the unit for measurement.
 //This ratio defines how many pixels correspond to 1 Box2D "metre"
 //Box2D is optimized for objects of 1x1 metre therefore it makes sense
@@ -129,9 +131,25 @@ enum {
 		[label setColor:ccc3(0,0,255)];
 		label.position = ccp( screenSize.width/2, screenSize.height-50);
 		
+
+        [self setupMenus];
+        
+        
 		[self schedule: @selector(tick:)];
 	}
 	return self;
+}
+
+
+- (void) setupMenus {
+    CCLabelTTF *label = [CCLabelTTF labelWithString:@"Restart Game" fontName:@"Marker Felt" fontSize:22];
+    CCMenuItemLabel *itmStart = [CCMenuItemLabel itemWithLabel:label block:^(id sender) {
+        CCLOG(@"in restart block");
+        [[CCDirector sharedDirector] replaceScene: [CCTransitionFade transitionWithDuration:0.5f scene:[HelloWorldLayer scene]]];
+    }];
+    CCMenu *menu = [CCMenu menuWithItems:itmStart, nil];
+    [self addChild:menu];
+    
 }
 
 -(void) draw
