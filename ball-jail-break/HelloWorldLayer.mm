@@ -118,7 +118,9 @@ enum {
 		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"blocks.png" capacity:150];
 		[self addChild:batch z:0 tag:kTagBatchNode];
 		
-		[self addNewSpriteWithCoords:ccp(screenSize.width/2, screenSize.height/2)];
+		//[self addNewSpriteWithCoords:ccp(screenSize.width/2, screenSize.height/2)];
+        
+        [self addBall];
 		
 		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Tap screen" fontName:@"Marker Felt" fontSize:32];
 		[self addChild:label z:0];
@@ -183,6 +185,31 @@ enum {
 	body->CreateFixture(&fixtureDef);
 }
 
+-(void) addBall {
+    CCLOG(@"");
+    CCSprite *ball = [CCSprite spriteWithFile:@"ball32.png"];
+    [self addChild:ball];
+    
+    CGSize screenSize = [CCDirector sharedDirector].winSize;
+    ball.position = ccp(screenSize.width/2, screenSize.height/2 + 20);
+    
+    b2BodyDef ballBodyDef;
+    ballBodyDef.type = b2_dynamicBody;
+    ballBodyDef.position.Set(screenSize.width/2/PTM_RATIO, (screenSize.height/2 + 20)/PTM_RATIO);
+    ballBodyDef.userData = ball;
+    b2Body *ballBody = world->CreateBody(&ballBodyDef);
+    
+    b2CircleShape ballBox;
+    ballBox.m_radius = .5f;
+    
+    b2FixtureDef ballFixtureDef;
+    ballFixtureDef.shape = &ballBox;
+    ballFixtureDef.density = .8f;
+    ballFixtureDef.friction = 0.1f;
+    ballFixtureDef.restitution = .8f;
+    ballBody->CreateFixture(&ballFixtureDef);
+        
+}
 
 
 -(void) tick: (ccTime) dt
