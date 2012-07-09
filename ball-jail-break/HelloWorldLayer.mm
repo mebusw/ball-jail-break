@@ -124,6 +124,7 @@ enum {
         [self addObstacles:ccp(250, 220)];
         [self addObstacles:ccp(260, 180)];
         [self addObstacles:ccp(210, 160)];
+        [self addPolyObstacles:ccp(310, 220)];
         [self addBall:ccp(240, 10)];
 		
 		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Tap screen" fontName:@"Marker Felt" fontSize:32];
@@ -235,6 +236,45 @@ enum {
 	body->CreateFixture(&dynamicBox, 0);
 }
 
+
+-(void) addPolyObstacles:(CGPoint)p {
+    CCLOG(@"");
+	
+	b2BodyDef bodyDef;
+    
+	bodyDef.position.Set(p.x/PTM_RATIO, p.y/PTM_RATIO);
+	//bodyDef.userData = sprite;
+	b2Body *body = world->CreateBody(&bodyDef);
+	
+	b2PolygonShape triangleDef;
+    b2Vec2 vertices[3];
+    vertices[0].Set(-1, 0);
+    vertices[1].Set(3, 0);
+    vertices[2].Set(0, 2);
+    triangleDef.Set(vertices, 3);
+    body->CreateFixture(&triangleDef, 0);
+    
+	b2PolygonShape dynamicBoxDef;
+	dynamicBoxDef.SetAsBox(.5f, .5f);//These are mid points for our 1m box
+	//body->CreateFixture(&dynamicBoxDef, 0);
+    
+    b2PolygonShape orientedBoxDef;
+    b2Vec2 center(1.1f, .5f);
+    float32 angle = 0.5f * b2_pi;
+    orientedBoxDef.SetAsBox(0.8f, 0.8f, center, angle);
+    body->CreateFixture(&orientedBoxDef, 0);
+    
+    b2CircleShape holeDef;
+    holeDef.m_radius = .6f;
+    b2FixtureDef holeFixtureDef;
+    holeFixtureDef.shape = &holeDef;
+    holeFixtureDef.isSensor = true;
+    body->CreateFixture(&holeFixtureDef);
+    
+
+    
+}
+
 -(void) addBall:(CGPoint)p {
     CCLOG(@"");
     CCSprite *ball = [CCSprite spriteWithFile:@"ball32.png"];
@@ -290,6 +330,11 @@ enum {
     CGPoint pos = water.position;
     if (pos.y < -30) {
         water.position = ccp(0, pos.y + 300 / 4 * dt);
+    }
+    
+    for (b2Contact* c = world->GetContactList(); c; c = c->GetNext()) {
+        if (c->IsTouching())
+            CCLOG(@"%d", c->IsTouching()); 
     }
 }
 
