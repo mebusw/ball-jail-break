@@ -62,7 +62,7 @@ enum {
 		
 		// Define the gravity vector.
 		b2Vec2 gravity;
-		gravity.Set(0.0f, 3.0f);
+		gravity.Set(0.0f, 2.0f);
 		
 		// Do we want to let bodies sleep?
 		// This will speed up the physics simulation
@@ -133,6 +133,10 @@ enum {
 		
 
         [self setupMenus];
+        water = [CCLayerColor layerWithColor:ccc4(0, 0, 255, 100) width:screenSize.width height:screenSize.height];
+        [self addChild:water z:1000];
+        water.position = ccp(0, -300);
+        
         
         
 		[self schedule: @selector(tick:)];
@@ -236,7 +240,6 @@ enum {
     CCSprite *ball = [CCSprite spriteWithFile:@"ball32.png"];
     [self addChild:ball];
     
-    CGSize screenSize = [CCDirector sharedDirector].winSize;
     ball.position = ccp(p.x, p.y + 20);
     
     b2BodyDef ballBodyDef;
@@ -283,6 +286,11 @@ enum {
 			myActor.rotation = -1 * CC_RADIANS_TO_DEGREES(b->GetAngle());
 		}	
 	}
+    
+    CGPoint pos = water.position;
+    if (pos.y < -30) {
+        water.position = ccp(0, pos.y + 300 / 4 * dt);
+    }
 }
 
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -312,9 +320,12 @@ enum {
 	
 	// accelerometer values are in "Portrait" mode. Change them to Landscape left
 	// multiply the gravity by 10
-	b2Vec2 gravity( -accelY * 10, accelX * 10);
+	//b2Vec2 gravity( -accelY * 10, accelX * 10);
+    b2Vec2 gravity( -accelY * 10, 2);
 	
 	world->SetGravity( gravity );
+
+
 }
 
 // on "dealloc" you need to release all your retained objects
