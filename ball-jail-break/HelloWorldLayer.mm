@@ -93,26 +93,26 @@ enum {
 		// Call the body factory which allocates memory for the ground body
 		// from a pool and creates the ground box shape (also from a pool).
 		// The body is also added to the world.
-		b2Body* groundBody = world->CreateBody(&groundBodyDef);
+		ground = world->CreateBody(&groundBodyDef);
 		
 		// Define the ground box shape.
 		b2PolygonShape groundBox;		
 		
 		// bottom
-		groundBox.SetAsEdge(b2Vec2(0,0), b2Vec2(screenSize.width/PTM_RATIO,0));
-		groundBody->CreateFixture(&groundBox,0);
+		groundBox.SetAsEdge(b2Vec2(-40,0), b2Vec2((screenSize.width + 40)/PTM_RATIO,0));
+		ground->CreateFixture(&groundBox,0);
 		
 		// top
-		groundBox.SetAsEdge(b2Vec2(0,screenSize.height/PTM_RATIO), b2Vec2(screenSize.width/PTM_RATIO,screenSize.height/PTM_RATIO));
-		groundBody->CreateFixture(&groundBox,0);
+		groundBox.SetAsEdge(b2Vec2(-40,screenSize.height/PTM_RATIO), b2Vec2(screenSize.width/PTM_RATIO,screenSize.height/PTM_RATIO));
+		ground->CreateFixture(&groundBox,0);
 		
 		// left
-		groundBox.SetAsEdge(b2Vec2(0,screenSize.height/PTM_RATIO), b2Vec2(0,0));
-		groundBody->CreateFixture(&groundBox,0);
+		groundBox.SetAsEdge(b2Vec2(-40,screenSize.height/PTM_RATIO), b2Vec2(-40,0));
+		ground->CreateFixture(&groundBox,0);
 		
 		// right
 		groundBox.SetAsEdge(b2Vec2(screenSize.width/PTM_RATIO,screenSize.height/PTM_RATIO), b2Vec2(screenSize.width/PTM_RATIO,0));
-		groundBody->CreateFixture(&groundBox,0);
+		ground->CreateFixture(&groundBox,0);
 		
 		
 		//Set up sprite
@@ -271,8 +271,64 @@ enum {
     holeFixtureDef.isSensor = true;
     body->CreateFixture(&holeFixtureDef);
     
-
+    //////////////////////////
+    /////////////////////////
+	bodyDef.position.Set(260/PTM_RATIO, 100/PTM_RATIO);
+    bodyDef.type = b2_dynamicBody;
+	b2Body *b1 = world->CreateBody(&bodyDef);
+    b2PolygonShape boxShape1;
+    boxShape1.SetAsBox(0.1f, 1);
+    b2FixtureDef fd1;
+    fd1.shape = &boxShape1;
+    b1->CreateFixture(&fd1);
     
+	bodyDef.position.Set(240/PTM_RATIO, 120/PTM_RATIO);
+    bodyDef.type = b2_dynamicBody;
+	b2Body *b2 = world->CreateBody(&bodyDef);    
+    //b2->SetAngularVelocity(100);
+
+    b2PolygonShape boxShape2;
+    boxShape2.SetAsBox(1, 0.1f);    
+    b2FixtureDef fd2;
+    fd2.density = 0.01f;
+    fd2.shape = &boxShape2;
+    b2->CreateFixture(&fd2);
+    
+    b2RevoluteJointDef jd;
+    jd.Initialize(b1, b2, b1->GetWorldCenter());
+    world->CreateJoint(&jd);
+ 
+    
+    {
+        
+        b2CircleShape shape;
+        shape.m_radius = 0.5f;
+        
+        b2BodyDef bd;
+        bd.type = b2_dynamicBody;
+        
+        b2RevoluteJointDef rjd;
+        
+        bd.position.Set(200.0f/PTM_RATIO, 120.0f/PTM_RATIO);
+        b2Body* body = world->CreateBody(&bd);
+        body->CreateFixture(&shape, 5.0f);
+        
+        float32 w = 100.0f;
+        body->SetAngularVelocity(w);
+        body->SetLinearVelocity(b2Vec2(-8.0f * w/PTM_RATIO, 0.0f/PTM_RATIO));
+        
+        rjd.Initialize(ground, body, b2Vec2(200.0f/PTM_RATIO, 118.0f/PTM_RATIO));
+        rjd.motorSpeed = 1.0f * b2_pi;
+        rjd.maxMotorTorque = 10000.0f;
+        rjd.enableMotor = false;
+        rjd.lowerAngle = -0.5f * b2_pi;
+        rjd.upperAngle = 0.5f * b2_pi;
+        rjd.enableLimit = true;
+        rjd.collideConnected = true;
+        
+        b2RevoluteJoint* m_joint;
+        m_joint = (b2RevoluteJoint*)world->CreateJoint(&rjd);
+    }
 }
 
 -(void) addBall:(CGPoint)p {
@@ -333,8 +389,9 @@ enum {
     }
     
     for (b2Contact* c = world->GetContactList(); c; c = c->GetNext()) {
-        if (c->IsTouching())
-            CCLOG(@"%d", c->IsTouching()); 
+        if (c->IsTouching()) {
+            //CCLOG(@"%d", c->IsTouching()); 
+        }
     }
 }
 

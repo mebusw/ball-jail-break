@@ -15,7 +15,8 @@
 // HelloWorldLayer
 @interface HelloWorldLayer : CCLayer
 {
-	b2World* world;
+	b2World *world;
+    b2Body *ground;
 	GLESDebugDraw *m_debugDraw;
     CCLayerColor *water;
 }
