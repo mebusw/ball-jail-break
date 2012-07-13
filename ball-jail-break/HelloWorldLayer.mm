@@ -79,10 +79,10 @@ enum {
 		
 		uint32 flags = 0;
 		flags += b2DebugDraw::e_shapeBit;
-//		flags += b2DebugDraw::e_jointBit;
+		flags += b2DebugDraw::e_jointBit;
 //		flags += b2DebugDraw::e_aabbBit;
-//		flags += b2DebugDraw::e_pairBit;
-//		flags += b2DebugDraw::e_centerOfMassBit;
+		flags += b2DebugDraw::e_pairBit;
+		flags += b2DebugDraw::e_centerOfMassBit;
 		m_debugDraw->SetFlags(flags);		
 		
 		
@@ -165,7 +165,7 @@ enum {
     ground->CreateFixture(&groundBox,0);
     
     // top
-    groundBox.SetAsEdge(b2Vec2(0, screenSize.height/PTM_RATIO), b2Vec2(screenSize.width/PTM_RATIO, screenSize.height/PTM_RATIO));
+    groundBox.SetAsEdge(b2Vec2(0, screenSize.height/PTM_RATIO - 1.0f), b2Vec2(screenSize.width/PTM_RATIO, screenSize.height/PTM_RATIO - 1.0f));
     ground->CreateFixture(&groundBox,0);
     
     // left
@@ -286,7 +286,7 @@ enum {
     fd1.shape = &boxShape1;
     b1->CreateFixture(&fd1);
     
-	bodyDef.position.Set(240/PTM_RATIO, 120/PTM_RATIO);
+	bodyDef.position.Set(200/PTM_RATIO, 120/PTM_RATIO);
     bodyDef.type = b2_dynamicBody;
 	b2Body *b2 = world->CreateBody(&bodyDef);    
     b2->SetAngularDamping(200);
