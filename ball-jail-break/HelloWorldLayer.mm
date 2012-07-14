@@ -18,11 +18,13 @@
 //to define the ratio so that your most common object type is 1x1 metre.
 #define PTM_RATIO 32
 
+
 // enums that will be used as tags
 enum {
 	kTagTileMap = 1,
 	kTagBatchNode = 1,
 	kTagAnimation1 = 1,
+    kMenuFail = 100,
 };
 
 
@@ -121,15 +123,35 @@ enum {
 
 
 - (void) setupMenus {
-    CCLabelTTF *label = [CCLabelTTF labelWithString:@"||" fontName:@"Marker Felt" fontSize:22];
-    CCMenuItemLabel *itmStart = [CCMenuItemLabel itemWithLabel:label block:^(id sender) {
-        CCLOG(@"in restart block");
-        [[CCDirector sharedDirector] replaceScene: [CCTransitionFade transitionWithDuration:0.5f scene:[HelloWorldLayer scene]]];
-    }];
-    CCMenu *menu = [CCMenu menuWithItems:itmStart, nil];
-    menu.position = ccp(460, 300);
-    [self addChild:menu];
+    {
+        /////Pause Menu////
+        
+        CCLabelTTF *label = [CCLabelTTF labelWithString:@"||" fontName:@"Marker Felt" fontSize:22];
+        CCMenuItemLabel *itmStart = [CCMenuItemLabel itemWithLabel:label block:^(id sender) {
+            CCLOG(@"in || block");
+            [[CCDirector sharedDirector] replaceScene: [CCTransitionFade transitionWithDuration:0.5f scene:[HelloWorldLayer scene]]];
+        }];
+        CCMenu *menu = [CCMenu menuWithItems:itmStart, nil];
+        menu.position = ccp(460, 300);
+        [self addChild:menu];
+        
+    }
     
+    
+    {
+        //////Fail Menu/////
+        
+        CCLabelTTF *label = [CCLabelTTF labelWithString:@"Play Again" fontName:@"Marker Felt" fontSize:22];
+        CCMenuItemLabel *itmStart = [CCMenuItemLabel itemWithLabel:label block:^(id sender) {
+            CCLOG(@"in restart block");
+            [[CCDirector sharedDirector] replaceScene: [CCTransitionFade transitionWithDuration:0.5f scene:[HelloWorldLayer scene]]];
+        }];
+        CCMenu *menu = [CCMenu menuWithItems:itmStart, nil];
+        menu.position = ccp(240, 200);
+        menu.tag = kMenuFail;
+        menu.visible = NO;
+        [self addChild:menu];
+    }
 }
 
 -(void) draw
@@ -201,6 +223,8 @@ enum {
 	bodyDef.type = b2_dynamicBody;
 
 	bodyDef.position.Set(p.x/PTM_RATIO, p.y/PTM_RATIO);
+	bodyDef.position.Set(p.x/PTM_RATIO, p.y/PTM_RATIO);
+    
 	bodyDef.userData = sprite;
 	b2Body *body = world->CreateBody(&bodyDef);
 	
@@ -371,21 +395,32 @@ enum {
 	}
     
     CGPoint pos = water.position;
-    if (pos.y < -30) {
+    if (pos.y < -40) {
         water.position = ccp(0, pos.y + 300 / 4 * dt);
     }
     
+    if ([self checkFail]) {
+        CCLOG(@"You Failed");
+        CCMenu *menuFail = (CCMenu*)[self getChildByTag:kMenuFail];
+        menuFail.visible = YES;
+    }
+}
+
+-(bool) checkFail {
     for (b2Contact* c = world->GetContactList(); c; c = c->GetNext()) {
         if (c->IsTouching() && c->GetFixtureA() == sensor_fail) {
-            CCSprite *actor = (CCSprite*)c->GetFixtureB()->GetBody()->GetUserData();
-            CCLOG(@"%@ %d %d", actor, actor.tag, c->GetFixtureA()->IsSensor()); 
+            //CCSprite *actor = (CCSprite*)c->GetFixtureB()->GetBody()->GetUserData();
+            return (ball == c->GetFixtureB());
+            //CCLOG(@"%@ %d %d", actor, actor.tag, c->GetFixtureA()->IsSensor()); 
         }
         
         if (c->IsTouching() && c->GetFixtureB() == sensor_fail) {
-            CCSprite *actor = (CCSprite*)c->GetFixtureA()->GetBody()->GetUserData();
-            CCLOG(@"%@ %d %d", actor, actor.tag, c->GetFixtureB()->IsSensor()); 
+            return (ball == c->GetFixtureA());
+            //CCSprite *actor = (CCSprite*)c->GetFixtureA()->GetBody()->GetUserData();
+            //CCLOG(@"%@ %d %d", actor, actor.tag, c->GetFixtureB()->IsSensor()); 
         }
     }
+    return false;
 }
 
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
