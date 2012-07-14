@@ -64,7 +64,7 @@ enum {
 		
 		// Define the gravity vector.
 		b2Vec2 gravity;
-		gravity.Set(0.0f, 2.0f);
+		gravity.Set(0.0f, 1.5f);
 		
 		// Do we want to let bodies sleep?
 		// This will speed up the physics simulation
@@ -96,6 +96,8 @@ enum {
 		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"blocks.png" capacity:150];
 		[self addChild:batch z:0 tag:kTagBatchNode];
 		
+        _obstacles = [[Obstacles alloc] initWithWorld:world];
+        
         [self addObstacles:ccp(250, 220)];
         [self addObstacles:ccp(260, 180)];
         [self addObstacles:ccp(210, 160)];
@@ -103,17 +105,14 @@ enum {
         [self addSensor];
         [self addBall:ccp(240, 10)];
 		
-		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Tap screen" fontName:@"Marker Felt" fontSize:32];
+		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Cross Galaxy" fontName:@"Marker Felt" fontSize:32];
 		[self addChild:label z:0];
 		[label setColor:ccc3(0,0,255)];
 		label.position = ccp( screenSize.width/2, screenSize.height-50);
 		
         [self setupMenus];
         
-        water = [CCLayerColor layerWithColor:ccc4(0, 0, 255, 100) width:screenSize.width height:screenSize.height];
-        [self addChild:water z:1000];
-        water.position = ccp(0, -300);
-        
+
         //********************//
         
 		[self schedule: @selector(tick:)];
@@ -141,7 +140,7 @@ enum {
     {
         //////Fail Menu/////
         
-        CCLabelTTF *label = [CCLabelTTF labelWithString:@"Play Again" fontName:@"Marker Felt" fontSize:22];
+        CCLabelTTF *label = [CCLabelTTF labelWithString:@"Play Again" fontName:@"Marker Felt" fontSize:32];
         CCMenuItemLabel *itmStart = [CCMenuItemLabel itemWithLabel:label block:^(id sender) {
             CCLOG(@"in restart block");
             [[CCDirector sharedDirector] replaceScene: [CCTransitionFade transitionWithDuration:0.5f scene:[HelloWorldLayer scene]]];
@@ -268,17 +267,7 @@ enum {
 }
 
 -(void) addSensor {
-   	b2BodyDef bodyDef;
-    bodyDef.position.Set(4, 9);
-    b2Body *body = world->CreateBody(&bodyDef);
-    
-    
-    b2CircleShape holeDef;
-    holeDef.m_radius = .6f;
-    b2FixtureDef holeFixtureDef;
-    holeFixtureDef.shape = &holeDef;
-    holeFixtureDef.isSensor = true;
-    sensor_fail = body->CreateFixture(&holeFixtureDef);    
+    sensor_fail = [_obstacles newSensor:b2Vec2(4, 7)];
     
 }
 
@@ -394,10 +383,6 @@ enum {
 		}	
 	}
     
-    CGPoint pos = water.position;
-    if (pos.y < -40) {
-        water.position = ccp(0, pos.y + 300 / 4 * dt);
-    }
     
     if ([self checkFail]) {
         CCLOG(@"You Failed");
@@ -462,6 +447,8 @@ enum {
 - (void) dealloc
 {
 	// in case you have something to dealloc, do it in this method
+    [_obstacles dealloc];
+    
 	delete world;
 	world = NULL;
 	

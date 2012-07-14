@@ -11,6 +11,7 @@
 #import "cocos2d.h"
 #import "Box2D.h"
 #import "GLES-Render.h"
+#import "Obstacles.h"
 
 // HelloWorldLayer
 @interface HelloWorldLayer : CCLayer
@@ -19,9 +20,10 @@
     b2Body *ground;
 
 	GLESDebugDraw *m_debugDraw;
-    CCLayerColor *water;
     b2Fixture *sensor_fail;
     b2Fixture *ball;
+    
+    Obstacles *_obstacles;
 }
 
 // returns a CCScene that contains the HelloWorldLayer as the only child
