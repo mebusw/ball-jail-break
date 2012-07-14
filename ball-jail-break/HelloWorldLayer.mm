@@ -98,12 +98,6 @@ enum {
 		
         _obstacles = [[Obstacles alloc] initWithWorld:world];
         
-        [self addObstacles:ccp(250, 220)];
-        [self addObstacles:ccp(260, 180)];
-        [self addObstacles:ccp(210, 160)];
-        [self addPolyObstacles:ccp(310, 220)];
-        [self addSensor];
-        [self addBall:ccp(240, 10)];
 		
 		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Cross Galaxy" fontName:@"Marker Felt" fontSize:32];
 		[self addChild:label z:0];
@@ -112,7 +106,8 @@ enum {
 		
         [self setupMenus];
         
-
+        [self setupSenario];
+        
         //********************//
         
 		[self schedule: @selector(tick:)];
@@ -169,6 +164,15 @@ enum {
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
+}
+
+-(void) setupSenario {
+    [self addObstacles:ccp(250, 220)];
+    [self addObstacles:ccp(260, 180)];
+    [self addObstacles:ccp(210, 160)];
+    [self addPolyObstacles:ccp(310, 220)];
+    sensor_fail = [_obstacles newSensor:b2Vec2(4, 7)];
+    [self addBall:ccp(240, 10)];
 }
 
 -(void) addGround {
@@ -266,10 +270,7 @@ enum {
     
 }
 
--(void) addSensor {
-    sensor_fail = [_obstacles newSensor:b2Vec2(4, 7)];
-    
-}
+
 
 
 -(void) addPolyObstacles:(CGPoint)p {
