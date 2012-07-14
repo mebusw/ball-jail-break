@@ -16,6 +16,9 @@
 #import "RootViewController.h"
 #import "GameConfig.h"
 
+
+#define GAD_PUBLISHER_ID @"fb91503e73fe427d"
+
 @implementation RootViewController
 
 /*
