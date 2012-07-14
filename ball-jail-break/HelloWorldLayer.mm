@@ -84,22 +84,21 @@ enum {
 		flags += b2DebugDraw::e_pairBit;
 		flags += b2DebugDraw::e_centerOfMassBit;
 		m_debugDraw->SetFlags(flags);		
-		
+
+		//****************//
 		
 		// Define the ground body.
         [self addGround];
 		
-		
 		//Set up sprite
-		
 		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"blocks.png" capacity:150];
 		[self addChild:batch z:0 tag:kTagBatchNode];
 		
-		//[self addNewSpriteWithCoords:ccp(screenSize.width/2, screenSize.height/2)];
         [self addObstacles:ccp(250, 220)];
         [self addObstacles:ccp(260, 180)];
         [self addObstacles:ccp(210, 160)];
         [self addPolyObstacles:ccp(310, 220)];
+        [self addSensor];
         [self addBall:ccp(240, 10)];
 		
 		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Tap screen" fontName:@"Marker Felt" fontSize:32];
@@ -107,13 +106,13 @@ enum {
 		[label setColor:ccc3(0,0,255)];
 		label.position = ccp( screenSize.width/2, screenSize.height-50);
 		
-
         [self setupMenus];
+        
         water = [CCLayerColor layerWithColor:ccc4(0, 0, 255, 100) width:screenSize.width height:screenSize.height];
         [self addChild:water z:1000];
         water.position = ccp(0, -300);
         
-        
+        //********************//
         
 		[self schedule: @selector(tick:)];
 	}
@@ -122,12 +121,13 @@ enum {
 
 
 - (void) setupMenus {
-    CCLabelTTF *label = [CCLabelTTF labelWithString:@"Restart Game" fontName:@"Marker Felt" fontSize:22];
+    CCLabelTTF *label = [CCLabelTTF labelWithString:@"||" fontName:@"Marker Felt" fontSize:22];
     CCMenuItemLabel *itmStart = [CCMenuItemLabel itemWithLabel:label block:^(id sender) {
         CCLOG(@"in restart block");
         [[CCDirector sharedDirector] replaceScene: [CCTransitionFade transitionWithDuration:0.5f scene:[HelloWorldLayer scene]]];
     }];
     CCMenu *menu = [CCMenu menuWithItems:itmStart, nil];
+    menu.position = ccp(460, 300);
     [self addChild:menu];
     
 }
@@ -190,6 +190,7 @@ enum {
 	int idx = (CCRANDOM_0_1() > .5 ? 0:1);
 	int idy = (CCRANDOM_0_1() > .5 ? 0:1);
 	CCSprite *sprite = [CCSprite spriteWithBatchNode:batch rect:CGRectMake(32 * idx,32 * idy,32,32)];
+    sprite.tag = 55;
 	[batch addChild:sprite];
 	
 	sprite.position = ccp( p.x, p.y);
@@ -239,6 +240,22 @@ enum {
 	
 
 	body->CreateFixture(&dynamicBox, 0);
+    
+}
+
+-(void) addSensor {
+   	b2BodyDef bodyDef;
+    bodyDef.position.Set(4, 9);
+    b2Body *body = world->CreateBody(&bodyDef);
+    
+    
+    b2CircleShape holeDef;
+    holeDef.m_radius = .6f;
+    b2FixtureDef holeFixtureDef;
+    holeFixtureDef.shape = &holeDef;
+    holeFixtureDef.isSensor = true;
+    sensor_fail = body->CreateFixture(&holeFixtureDef);    
+    
 }
 
 
@@ -269,12 +286,7 @@ enum {
     orientedBoxDef.SetAsBox(0.8f, 0.8f, center, angle);
     body->CreateFixture(&orientedBoxDef, 0);
     
-    b2CircleShape holeDef;
-    holeDef.m_radius = .6f;
-    b2FixtureDef holeFixtureDef;
-    holeFixtureDef.shape = &holeDef;
-    holeFixtureDef.isSensor = true;
-    body->CreateFixture(&holeFixtureDef);
+
     
     //////////////////////////
     /////////////////////////
@@ -307,15 +319,16 @@ enum {
 
 -(void) addBall:(CGPoint)p {
     CCLOG(@"");
-    CCSprite *ball = [CCSprite spriteWithFile:@"ball32.png"];
-    [self addChild:ball];
+    CCSprite *ballSp = [CCSprite spriteWithFile:@"ball32.png"];
+    ballSp.tag = 99;
+    [self addChild:ballSp];
     
-    ball.position = ccp(p.x, p.y + 20);
+    ballSp.position = ccp(p.x, p.y + 20);
     
     b2BodyDef ballBodyDef;
     ballBodyDef.type = b2_dynamicBody;
     ballBodyDef.position.Set(p.x/PTM_RATIO, (p.y + 20)/PTM_RATIO);
-    ballBodyDef.userData = ball;
+    ballBodyDef.userData = ballSp;
     b2Body *ballBody = world->CreateBody(&ballBodyDef);
     
     b2CircleShape ballBox;
@@ -326,7 +339,7 @@ enum {
     ballFixtureDef.density = .8f;
     ballFixtureDef.friction = 0.4f;
     ballFixtureDef.restitution = .3f;
-    ballBody->CreateFixture(&ballFixtureDef);
+    ball = ballBody->CreateFixture(&ballFixtureDef);
         
 }
 
@@ -363,8 +376,14 @@ enum {
     }
     
     for (b2Contact* c = world->GetContactList(); c; c = c->GetNext()) {
-        if (c->IsTouching()) {
-            //CCLOG(@"%d", c->IsTouching()); 
+        if (c->IsTouching() && c->GetFixtureA() == sensor_fail) {
+            CCSprite *actor = (CCSprite*)c->GetFixtureB()->GetBody()->GetUserData();
+            CCLOG(@"%@ %d %d", actor, actor.tag, c->GetFixtureA()->IsSensor()); 
+        }
+        
+        if (c->IsTouching() && c->GetFixtureB() == sensor_fail) {
+            CCSprite *actor = (CCSprite*)c->GetFixtureA()->GetBody()->GetUserData();
+            CCLOG(@"%@ %d %d", actor, actor.tag, c->GetFixtureB()->IsSensor()); 
         }
     }
 }

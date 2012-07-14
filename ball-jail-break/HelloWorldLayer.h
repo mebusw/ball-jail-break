@@ -17,8 +17,11 @@
 {
 	b2World *world;
     b2Body *ground;
+
 	GLESDebugDraw *m_debugDraw;
     CCLayerColor *water;
+    b2Fixture *sensor_fail;
+    b2Fixture *ball;
 }
 
 // returns a CCScene that contains the HelloWorldLayer as the only child
