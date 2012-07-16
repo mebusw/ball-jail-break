@@ -28,6 +28,9 @@
 }
 
 
+/**
+ * add new star as sensor
+ */
 -(b2Fixture*) newSensor:(b2Vec2) vec2 {
     b2BodyDef bodyDef;
     bodyDef.position.Set(vec2.x, vec2.y);
@@ -41,6 +44,11 @@
     holeFixtureDef.isSensor = true;
     return body->CreateFixture(&holeFixtureDef); 
 }
+
+
+
+
+
 
 
 

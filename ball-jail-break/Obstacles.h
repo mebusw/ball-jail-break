@@ -18,5 +18,35 @@
 -(id) initWithWorld:(b2World*) world;
 -(b2Fixture*) newSensor:(b2Vec2) vec2;
 
+class Ob {
+public:
+    Ob(b2World *world) {
+        m_world = world;
+    }
+    
+    ~Ob() {
+        m_world = NULL;
+    }
+    
+    /**
+     * add new star as sensor
+     */
+    b2Fixture* newStar(b2Vec2 vec2) {
+        b2BodyDef bodyDef;
+        bodyDef.position.Set(vec2.x, vec2.y);
+        b2Body *body = m_world->CreateBody(&bodyDef);
+        
+        
+        b2CircleShape holeDef;
+        holeDef.m_radius = .6f;
+        b2FixtureDef holeFixtureDef;
+        holeFixtureDef.shape = &holeDef;
+        holeFixtureDef.isSensor = true;
+        return body->CreateFixture(&holeFixtureDef); 
+    }
+    
+private:
+    b2World *m_world;
+};
 
 @end

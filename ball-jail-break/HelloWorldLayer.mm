@@ -96,7 +96,8 @@ enum {
 		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"blocks.png" capacity:150];
 		[self addChild:batch z:0 tag:kTagBatchNode];
 		
-        _obstacles = [[Obstacles alloc] initWithWorld:world];
+        //_obstacles = [[Obstacles alloc] initWithWorld:world];
+        _obstacles = new Ob(world);
         
 		
 		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Cross Galaxy" fontName:@"Marker Felt" fontSize:32];
@@ -166,12 +167,73 @@ enum {
 
 }
 
+
+-(void) addPolyObstacles:(CGPoint)p {
+    CCLOG(@"");
+	
+	b2BodyDef bodyDef;
+    
+	bodyDef.position.Set(p.x/PTM_RATIO, p.y/PTM_RATIO);
+	//bodyDef.userData = sprite;
+	b2Body *body = world->CreateBody(&bodyDef);
+	
+	b2PolygonShape triangleDef;
+    b2Vec2 vertices[3];
+    vertices[0].Set(-1, 0);
+    vertices[1].Set(3, 0);
+    vertices[2].Set(0, 2);
+    triangleDef.Set(vertices, 3);
+    body->CreateFixture(&triangleDef, 0);
+    
+	b2PolygonShape dynamicBoxDef;
+	dynamicBoxDef.SetAsBox(.5f, .5f);//These are mid points for our 1m box
+	//body->CreateFixture(&dynamicBoxDef, 0);
+    
+    b2PolygonShape orientedBoxDef;
+    b2Vec2 center(1.1f, .5f);
+    float32 angle = 0.5f * b2_pi;
+    orientedBoxDef.SetAsBox(0.8f, 0.8f, center, angle);
+    body->CreateFixture(&orientedBoxDef, 0);
+    
+    
+    
+    //////////////////////////
+    /////////////////////////
+	bodyDef.position.Set(260/PTM_RATIO, 100/PTM_RATIO);
+	b2Body *b1 = world->CreateBody(&bodyDef);
+    b2PolygonShape boxShape1;
+    boxShape1.SetAsBox(0.1f, 1);
+    b2FixtureDef fd1;
+    fd1.shape = &boxShape1;
+    b1->CreateFixture(&fd1);
+    
+	bodyDef.position.Set(200/PTM_RATIO, 120/PTM_RATIO);
+    bodyDef.type = b2_dynamicBody;
+	b2Body *b2 = world->CreateBody(&bodyDef);    
+    b2->SetAngularDamping(200);
+    
+    b2PolygonShape boxShape2;
+    boxShape2.SetAsBox(1, 0.1f);    
+    b2FixtureDef fd2;
+    fd2.density = 0.01f;
+    fd2.shape = &boxShape2;
+    b2->CreateFixture(&fd2);
+    
+    b2RevoluteJointDef jd;
+    jd.Initialize(b1, b2, b1->GetWorldCenter());
+    world->CreateJoint(&jd);
+    
+    
+}
+
+
 -(void) setupSenario {
     [self addObstacles:ccp(250, 220)];
     [self addObstacles:ccp(260, 180)];
     [self addObstacles:ccp(210, 160)];
     [self addPolyObstacles:ccp(310, 220)];
-    sensor_fail = [_obstacles newSensor:b2Vec2(4, 7)];
+    //sensor_fail = [_obstacles newSensor:b2Vec2(4, 7)];
+    sensor_fail = _obstacles->newStar(b2Vec2(4, 7));
     [self addBall:ccp(240, 10)];
 }
 
@@ -243,10 +305,11 @@ enum {
 	body->CreateFixture(&fixtureDef);
 }
 
+
 -(void) addObstacles:(CGPoint)p {
     CCLOG(@"");
 	CCSpriteBatchNode *batch = (CCSpriteBatchNode*) [self getChildByTag:kTagBatchNode];
-
+    
     int idx = (CCRANDOM_0_1() > .5 ? 0:1);
 	int idy = (CCRANDOM_0_1() > .5 ? 0:1);
 	CCSprite *sprite = [CCSprite spriteWithBatchNode:batch rect:CGRectMake(32 * idx,32 * idy,32,32)];
@@ -265,69 +328,8 @@ enum {
 	b2PolygonShape dynamicBox;
 	dynamicBox.SetAsBox(.5f, .5f);//These are mid points for our 1m box
 	
-
+    
 	body->CreateFixture(&dynamicBox, 0);
-    
-}
-
-
-
-
--(void) addPolyObstacles:(CGPoint)p {
-    CCLOG(@"");
-	
-	b2BodyDef bodyDef;
-    
-	bodyDef.position.Set(p.x/PTM_RATIO, p.y/PTM_RATIO);
-	//bodyDef.userData = sprite;
-	b2Body *body = world->CreateBody(&bodyDef);
-	
-	b2PolygonShape triangleDef;
-    b2Vec2 vertices[3];
-    vertices[0].Set(-1, 0);
-    vertices[1].Set(3, 0);
-    vertices[2].Set(0, 2);
-    triangleDef.Set(vertices, 3);
-    body->CreateFixture(&triangleDef, 0);
-    
-	b2PolygonShape dynamicBoxDef;
-	dynamicBoxDef.SetAsBox(.5f, .5f);//These are mid points for our 1m box
-	//body->CreateFixture(&dynamicBoxDef, 0);
-    
-    b2PolygonShape orientedBoxDef;
-    b2Vec2 center(1.1f, .5f);
-    float32 angle = 0.5f * b2_pi;
-    orientedBoxDef.SetAsBox(0.8f, 0.8f, center, angle);
-    body->CreateFixture(&orientedBoxDef, 0);
-    
-
-    
-    //////////////////////////
-    /////////////////////////
-	bodyDef.position.Set(260/PTM_RATIO, 100/PTM_RATIO);
-	b2Body *b1 = world->CreateBody(&bodyDef);
-    b2PolygonShape boxShape1;
-    boxShape1.SetAsBox(0.1f, 1);
-    b2FixtureDef fd1;
-    fd1.shape = &boxShape1;
-    b1->CreateFixture(&fd1);
-    
-	bodyDef.position.Set(200/PTM_RATIO, 120/PTM_RATIO);
-    bodyDef.type = b2_dynamicBody;
-	b2Body *b2 = world->CreateBody(&bodyDef);    
-    b2->SetAngularDamping(200);
-
-    b2PolygonShape boxShape2;
-    boxShape2.SetAsBox(1, 0.1f);    
-    b2FixtureDef fd2;
-    fd2.density = 0.01f;
-    fd2.shape = &boxShape2;
-    b2->CreateFixture(&fd2);
-    
-    b2RevoluteJointDef jd;
-    jd.Initialize(b1, b2, b1->GetWorldCenter());
-    world->CreateJoint(&jd);
- 
     
 }
 
@@ -448,7 +450,8 @@ enum {
 - (void) dealloc
 {
 	// in case you have something to dealloc, do it in this method
-    [_obstacles dealloc];
+    //[_obstacles dealloc];
+    delete _obstacles;
     
 	delete world;
 	world = NULL;

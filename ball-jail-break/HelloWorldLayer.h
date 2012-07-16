@@ -23,7 +23,8 @@
     b2Fixture *sensor_fail;
     b2Fixture *ball;
     
-    Obstacles *_obstacles;
+    //Obstacles *_obstacles;
+    Ob *_obstacles;
 }
 
 // returns a CCScene that contains the HelloWorldLayer as the only child
