@@ -97,7 +97,7 @@ enum {
 		[self addChild:batch z:0 tag:kTagBatchNode];
 		
         //_obstacles = [[Obstacles alloc] initWithWorld:world];
-        _obstacles = new Ob(world);
+        _obstacles = new Obstacles(world);
         
 		
 		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Cross Galaxy" fontName:@"Marker Felt" fontSize:32];
@@ -232,8 +232,11 @@ enum {
     [self addObstacles:ccp(260, 180)];
     [self addObstacles:ccp(210, 160)];
     [self addPolyObstacles:ccp(310, 220)];
-    //sensor_fail = [_obstacles newSensor:b2Vec2(4, 7)];
-    sensor_fail = _obstacles->newStar(b2Vec2(4, 7));
+    
+    sensor_fail = _obstacles->newStar(b2Vec2(4, 7), .6f, NULL, b2Vec2(.1f, 0), 0);
+    _obstacles->newStaticField(b2Vec2(1, .1f), b2Vec2(3, 4), .2f * b2_pi, NULL);
+    _obstacles->newSpaceRobot(b2Vec2(.6f, .1f), b2Vec2(.6f, .1f), b2Vec2(3, 7), b2Vec2(4, 7), 0, -0.75 * b2_pi, .75 * b2_pi, 0, NULL, NULL);
+    
     [self addBall:ccp(240, 10)];
 }
 

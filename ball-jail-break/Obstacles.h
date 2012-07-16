@@ -11,42 +11,100 @@
 #import "Box2D.h"
 #import "GLES-Render.h"
 
-@interface Obstacles : NSObject {
-    b2World *_world;
-}
 
--(id) initWithWorld:(b2World*) world;
--(b2Fixture*) newSensor:(b2Vec2) vec2;
-
-class Ob {
+class Obstacles {
+private:
+    b2World *m_world;
+    
 public:
-    Ob(b2World *world) {
+    Obstacles(b2World *world) {
         m_world = world;
     }
     
-    ~Ob() {
+    ~Obstacles() {
         m_world = NULL;
     }
     
     /**
      * add new star as sensor
+     * meteor: lineVelocity > 0
+     * planet: motorSpeed > 0
      */
-    b2Fixture* newStar(b2Vec2 vec2) {
+    b2Fixture* newStar(b2Vec2 pos, float32 radius, void *sprite, b2Vec2 lineVelocity, float32 motorSpeed) {
         b2BodyDef bodyDef;
-        bodyDef.position.Set(vec2.x, vec2.y);
+        bodyDef.position.Set(pos.x, pos.y);
+        bodyDef.userData = sprite;
+        bodyDef.type = b2_kinematicBody;
+        bodyDef.linearVelocity = lineVelocity;
+        //TODO motorSpeed
+        
         b2Body *body = m_world->CreateBody(&bodyDef);
         
+        b2CircleShape circleDef;
+        circleDef.m_radius = radius;
         
-        b2CircleShape holeDef;
-        holeDef.m_radius = .6f;
         b2FixtureDef holeFixtureDef;
-        holeFixtureDef.shape = &holeDef;
+        holeFixtureDef.shape = &circleDef;
         holeFixtureDef.isSensor = true;
-        return body->CreateFixture(&holeFixtureDef); 
+        return body->CreateFixture(&holeFixtureDef);
     }
     
-private:
-    b2World *m_world;
+    /**
+     * add static field as static body
+     */
+    b2Body* newStaticField(b2Vec2 size, b2Vec2 pos, float32 angle, void *sprite) {
+        b2BodyDef bodyDef;
+        bodyDef.position.Set(pos.x, pos.y);
+        bodyDef.userData = sprite;
+        bodyDef.angle = angle;
+        b2Body *body = m_world->CreateBody(&bodyDef);
+        
+        b2PolygonShape boxDef;
+        boxDef.SetAsBox(size.x, size.y);
+        
+        body->CreateFixture(&boxDef, 0);
+        return body;
+    }
+    
+    /**
+     * add space robot as revolute joint
+     * A is fixed, B can revolute
+     */
+    b2RevoluteJoint* newSpaceRobot(b2Vec2 sizeA, b2Vec2 sizeB, b2Vec2 posA, b2Vec2 posB, float32 angleA, float32 lowerAngleB, float32 upperAngleB, float32 motorSpeed, void *spriteA, void *spriteB) {
+        b2BodyDef bodyDef;
+        
+        bodyDef.position.Set(posA.x, posA.y);
+        bodyDef.userData = spriteA;
+        bodyDef.type = b2_staticBody;
+        bodyDef.angle = angleA;
+        b2Body *bodyA = m_world->CreateBody(&bodyDef);
+        
+        bodyDef.position.Set(posB.x, posB.y);
+        bodyDef.userData = spriteB;
+        bodyDef.type = b2_dynamicBody;
+        b2Body *bodyB = m_world->CreateBody(&bodyDef);        
+        
+        
+        b2PolygonShape boxDef;
+        
+        boxDef.SetAsBox(sizeA.x, sizeA.y);
+        bodyA->CreateFixture(&boxDef, 0);
+        
+        boxDef.SetAsBox(sizeB.x, sizeB.y);
+        bodyB->CreateFixture(&boxDef, 12);
+        
+        
+        b2RevoluteJointDef jd;
+        jd.Initialize(bodyA, bodyB, bodyA->GetWorldCenter());
+        jd.lowerAngle = lowerAngleB;
+        jd.upperAngle = upperAngleB;
+        jd.motorSpeed = motorSpeed;
+        //jd.maxMotorTorque = 100;
+        jd.enableLimit = true;
+        jd.enableMotor = true;
+        return (b2RevoluteJoint*)m_world->CreateJoint(&jd);
+    }
+
 };
 
-@end
+

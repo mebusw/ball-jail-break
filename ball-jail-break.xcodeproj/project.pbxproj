@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8F0AF2BE15B19D2A00D78C7D /* Obstacles.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8F0AF2BD15B19D2900D78C7D /* Obstacles.mm */; };
 		8F0E8FA415A9E53300045045 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F0E8FA315A9E53300045045 /* GameKit.framework */; };
 		8F7E402C15A96D9200029126 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7E402B15A96D9200029126 /* QuartzCore.framework */; };
 		8F7E402E15A96D9200029126 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7E402D15A96D9200029126 /* OpenGLES.framework */; };
@@ -167,7 +166,6 @@
 
 /* Begin PBXFileReference section */
 		8F0AF2BC15B19D2900D78C7D /* Obstacles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Obstacles.h; sourceTree = "<group>"; };
-		8F0AF2BD15B19D2900D78C7D /* Obstacles.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Obstacles.mm; sourceTree = "<group>"; };
 		8F0E8FA315A9E53300045045 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		8F7E402715A96D9200029126 /* ball-jail-break.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ball-jail-break.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F7E402B15A96D9200029126 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -548,7 +546,6 @@
 				8F7E420915A96D9500029126 /* HelloWorldLayer.h */,
 				8F7E420A15A96D9500029126 /* HelloWorldLayer.mm */,
 				8F0AF2BC15B19D2900D78C7D /* Obstacles.h */,
-				8F0AF2BD15B19D2900D78C7D /* Obstacles.mm */,
 				8F7E420C15A96D9500029126 /* GLES-Render.h */,
 				8F7E420D15A96D9500029126 /* GLES-Render.mm */,
 				8F7E420F15A96D9500029126 /* GameConfig.h */,
@@ -1226,7 +1223,6 @@
 				8F7E420815A96D9500029126 /* RootViewController.m in Sources */,
 				8F7E420B15A96D9500029126 /* HelloWorldLayer.mm in Sources */,
 				8F7E420E15A96D9500029126 /* GLES-Render.mm in Sources */,
-				8F0AF2BE15B19D2A00D78C7D /* Obstacles.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
