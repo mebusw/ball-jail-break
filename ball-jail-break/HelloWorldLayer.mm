@@ -168,73 +168,14 @@ enum {
 }
 
 
--(void) addPolyObstacles:(CGPoint)p {
-    CCLOG(@"");
-	
-	b2BodyDef bodyDef;
-    
-	bodyDef.position.Set(p.x/PTM_RATIO, p.y/PTM_RATIO);
-	//bodyDef.userData = sprite;
-	b2Body *body = world->CreateBody(&bodyDef);
-	
-	b2PolygonShape triangleDef;
-    b2Vec2 vertices[3];
-    vertices[0].Set(-1, 0);
-    vertices[1].Set(3, 0);
-    vertices[2].Set(0, 2);
-    triangleDef.Set(vertices, 3);
-    body->CreateFixture(&triangleDef, 0);
-    
-	b2PolygonShape dynamicBoxDef;
-	dynamicBoxDef.SetAsBox(.5f, .5f);//These are mid points for our 1m box
-	//body->CreateFixture(&dynamicBoxDef, 0);
-    
-    b2PolygonShape orientedBoxDef;
-    b2Vec2 center(1.1f, .5f);
-    float32 angle = 0.5f * b2_pi;
-    orientedBoxDef.SetAsBox(0.8f, 0.8f, center, angle);
-    body->CreateFixture(&orientedBoxDef, 0);
-    
-    
-    
-    //////////////////////////
-    /////////////////////////
-	bodyDef.position.Set(260/PTM_RATIO, 100/PTM_RATIO);
-	b2Body *b1 = world->CreateBody(&bodyDef);
-    b2PolygonShape boxShape1;
-    boxShape1.SetAsBox(0.1f, 1);
-    b2FixtureDef fd1;
-    fd1.shape = &boxShape1;
-    b1->CreateFixture(&fd1);
-    
-	bodyDef.position.Set(200/PTM_RATIO, 120/PTM_RATIO);
-    bodyDef.type = b2_dynamicBody;
-	b2Body *b2 = world->CreateBody(&bodyDef);    
-    b2->SetAngularDamping(200);
-    
-    b2PolygonShape boxShape2;
-    boxShape2.SetAsBox(1, 0.1f);    
-    b2FixtureDef fd2;
-    fd2.density = 0.01f;
-    fd2.shape = &boxShape2;
-    b2->CreateFixture(&fd2);
-    
-    b2RevoluteJointDef jd;
-    jd.Initialize(b1, b2, b1->GetWorldCenter());
-    world->CreateJoint(&jd);
-    
-    
-}
-
-
 -(void) setupSenario {
-    [self addObstacles:ccp(250, 220)];
-    [self addObstacles:ccp(260, 180)];
-    [self addObstacles:ccp(210, 160)];
-    [self addPolyObstacles:ccp(310, 220)];
-    
+   
     sensor_fail = _obstacles->newStar(b2Vec2(4, 7), .6f, NULL, b2Vec2(.1f, 0), 0);
     _obstacles->newStaticField(b2Vec2(1, .1f), b2Vec2(3, 4), .2f * b2_pi, NULL);
+    _obstacles->newStaticField(b2Vec2(.5f, .5f), b2Vec2(7, 5), 0.25f * b2_pi, NULL);
+    
+    _obstacles->newTriangleStaticField(b2Vec2(.5f, .5f), b2Vec2(9.3f, 5), 0.25f * b2_pi, NULL);
+    
     _obstacles->newSpaceRobot(b2Vec2(.6f, .1f), b2Vec2(.6f, .1f), b2Vec2(3, 7), b2Vec2(4, 7), 0, -0.75 * b2_pi, .75 * b2_pi, 0, NULL, NULL);
     
     [self addBall:ccp(240, 10)];
@@ -403,9 +344,7 @@ enum {
             //CCSprite *actor = (CCSprite*)c->GetFixtureB()->GetBody()->GetUserData();
             return (ball == c->GetFixtureB());
             //CCLOG(@"%@ %d %d", actor, actor.tag, c->GetFixtureA()->IsSensor()); 
-        }
-        
-        if (c->IsTouching() && c->GetFixtureB() == sensor_fail) {
+        } else if (c->IsTouching() && c->GetFixtureB() == sensor_fail) {
             return (ball == c->GetFixtureA());
             //CCSprite *actor = (CCSprite*)c->GetFixtureA()->GetBody()->GetUserData();
             //CCLOG(@"%@ %d %d", actor, actor.tag, c->GetFixtureB()->IsSensor()); 

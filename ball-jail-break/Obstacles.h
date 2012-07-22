@@ -67,6 +67,28 @@ public:
     }
     
     /**
+     * add triangle static field as static body
+     */
+    b2Body* newTriangleStaticField(b2Vec2 size, b2Vec2 pos, float32 angle, void *sprite) {
+        b2BodyDef bodyDef;
+        bodyDef.position.Set(pos.x, pos.y);
+        bodyDef.userData = sprite;
+        bodyDef.angle = angle;
+        b2Body *body = m_world->CreateBody(&bodyDef);
+        
+        b2PolygonShape triangleDef;
+        b2Vec2 vertices[3];
+        vertices[0].Set(0, size.y);
+        vertices[1].Set(-size.x / 2, 0);
+        vertices[2].Set(size.x / 2, 0);
+        triangleDef.Set(vertices, 3);
+        
+        body->CreateFixture(&triangleDef, 0);
+        return body;
+    }
+    
+    
+    /**
      * add space robot as revolute joint
      * A is fixed, B can revolute
      */
