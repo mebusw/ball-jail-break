@@ -21,10 +21,15 @@
 
 	GLESDebugDraw *m_debugDraw;
     b2Fixture *sensor_fail;
+    b2Fixture *sensor_win;
     b2Fixture *ball;
     
     //Obstacles *_obstacles;
     Obstacles *_obstacles;
+    
+    //timer
+    CCLabelTTF *timerLabel;
+    float32 timer;
 }
 
 // returns a CCScene that contains the HelloWorldLayer as the only child

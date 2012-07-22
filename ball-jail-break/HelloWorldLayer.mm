@@ -9,7 +9,7 @@
 
 // Import the interfaces
 #import "HelloWorldLayer.h"
-
+#import "GameOverLayer.h"
 
 
 //Pixel to metres ratio. Box2D uses metres as the unit for measurement.
@@ -64,7 +64,7 @@ enum {
 		
 		// Define the gravity vector.
 		b2Vec2 gravity;
-		gravity.Set(0.0f, 1.5f);
+		gravity.Set(0.0f, 1.0f);
 		
 		// Do we want to let bodies sleep?
 		// This will speed up the physics simulation
@@ -110,6 +110,10 @@ enum {
         [self setupSenario];
         
         //********************//
+        timerLabel = [CCLabelTTF labelWithString:@"00:000" fontName:@"Marker Felt" fontSize:24];
+        timerLabel.position = ccp(50, 300);
+        [self addChild:timerLabel];
+        timer = 0;
         
 		[self schedule: @selector(tick:)];
 	}
@@ -170,13 +174,17 @@ enum {
 
 -(void) setupSenario {
    
-    sensor_fail = _obstacles->newStar(b2Vec2(4, 7), .6f, NULL, b2Vec2(.1f, 0), 0);
-    _obstacles->newStaticField(b2Vec2(1, .1f), b2Vec2(3, 4), .2f * b2_pi, NULL);
-    _obstacles->newStaticField(b2Vec2(.5f, .5f), b2Vec2(7, 5), 0.25f * b2_pi, NULL);
+    sensor_fail = _obstacles->newStar(b2Vec2(9, 5), .6f, NULL, b2Vec2(.1f, 0), 0);
+    sensor_win = _obstacles->newStar(b2Vec2(4, 7), .6f, NULL, b2Vec2(0, 0), 0);
+
+    _obstacles->newStaticField(b2Vec2(1, .1f), b2Vec2(5, 3), .1f * b2_pi, NULL);
+    _obstacles->newStaticField(b2Vec2(1, .1f), b2Vec2(6.5, 3), -.1f * b2_pi, NULL);
+    
+    _obstacles->newStaticField(b2Vec2(.5f, .5f), b2Vec2(7, 5), 0.2f * b2_pi, NULL);
     
     _obstacles->newTriangleStaticField(b2Vec2(.5f, .5f), b2Vec2(9.3f, 5), 0.25f * b2_pi, NULL);
     
-    _obstacles->newSpaceRobot(b2Vec2(.6f, .1f), b2Vec2(.6f, .1f), b2Vec2(3, 7), b2Vec2(4, 7), 0, -0.75 * b2_pi, .75 * b2_pi, 0, NULL, NULL);
+    _obstacles->newSpaceRobot(b2Vec2(.6f, .1f), b2Vec2(.6f, .1f), b2Vec2(2.5, 4), b2Vec2(2.5, 4), 0, -0.75 * b2_pi, .75 * b2_pi, 0, NULL, NULL);
     
     [self addBall:ccp(240, 10)];
 }
@@ -331,20 +339,26 @@ enum {
 	}
     
     
-    if ([self checkFail]) {
+    if ([self checkStar:sensor_fail]) {
         CCLOG(@"You Failed");
-        CCMenu *menuFail = (CCMenu*)[self getChildByTag:kMenuFail];
-        menuFail.visible = YES;
+        [[CCDirector sharedDirector] replaceScene: [CCTransitionSlideInB transitionWithDuration:0.5f scene:[GameOverLayer scene]]];
+    } else if ([self checkStar:sensor_win]) {
+        CCLOG(@"You Win");
+        [[CCDirector sharedDirector] replaceScene: [CCTransitionSlideInB transitionWithDuration:0.5f scene:[GameOverLayer scene]]];
     }
+    
+    //update timer
+    timer += dt;
+    [timerLabel setString:[NSString stringWithFormat:@"%2.3f", timer]];
 }
 
--(bool) checkFail {
+-(bool) checkStar:(b2Fixture*) star {
     for (b2Contact* c = world->GetContactList(); c; c = c->GetNext()) {
-        if (c->IsTouching() && c->GetFixtureA() == sensor_fail) {
+        if (c->IsTouching() && c->GetFixtureA() == star) {
             //CCSprite *actor = (CCSprite*)c->GetFixtureB()->GetBody()->GetUserData();
             return (ball == c->GetFixtureB());
             //CCLOG(@"%@ %d %d", actor, actor.tag, c->GetFixtureA()->IsSensor()); 
-        } else if (c->IsTouching() && c->GetFixtureB() == sensor_fail) {
+        } else if (c->IsTouching() && c->GetFixtureB() == star) {
             return (ball == c->GetFixtureA());
             //CCSprite *actor = (CCSprite*)c->GetFixtureA()->GetBody()->GetUserData();
             //CCLOG(@"%@ %d %d", actor, actor.tag, c->GetFixtureB()->IsSensor()); 
@@ -381,9 +395,18 @@ enum {
 	// accelerometer values are in "Portrait" mode. Change them to Landscape left
 	// multiply the gravity by 10
 	//b2Vec2 gravity( -accelY * 10, accelX * 10);
-    b2Vec2 gravity( -accelY * 10, 2);
+    
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+	ccDeviceOrientation dr = (ccDeviceOrientation)orientation;
+    
+    if (dr == UIDeviceOrientationLandscapeLeft) {
+        b2Vec2 gravity( -accelY * 10, 1);
+        world->SetGravity( gravity );
+    } else if (dr == UIDeviceOrientationLandscapeRight) {
+        b2Vec2 gravity( accelY * 10, 1);
+        world->SetGravity( gravity );
+    }
 	
-	world->SetGravity( gravity );
 
 
 }
