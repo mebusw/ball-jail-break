@@ -8,6 +8,7 @@
 
 #import "GameOverLayer.h"
 #import "HelloWorldLayer.h"
+#import "AppDelegate.h"
 
 @implementation GameOverLayer
 
@@ -55,6 +56,11 @@
 }
 
 -(void) setupMenus {
+//    CCLabelTTF *scoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"Score: %d", [((AppDelegate*)[UIApplication sharedApplication]).timeRemains floatValue]* 1000] fontName:@"Marker Felt" fontSize:32];
+    CCLabelTTF *scoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"Score: %d", 1000] fontName:@"Marker Felt" fontSize:32];
+    scoreLabel.position = ccp(240, 100);
+    [self addChild:scoreLabel];
+    
     CCLabelTTF *label = [CCLabelTTF labelWithString:@"Play Again" fontName:@"Marker Felt" fontSize:32];
     CCMenuItemLabel *itmStart = [CCMenuItemLabel itemWithLabel:label block:^(id sender) {
         CCLOG(@"in restart block");
@@ -65,6 +71,7 @@
     menu.visible = YES;
     [self addChild:menu];
 }
+
 
 -(void) update: (ccTime) dt {
 }

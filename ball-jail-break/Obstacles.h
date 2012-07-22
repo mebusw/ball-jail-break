@@ -121,8 +121,8 @@ public:
         jd.lowerAngle = lowerAngleB;
         jd.upperAngle = upperAngleB;
         jd.motorSpeed = motorSpeed;
-        //jd.maxMotorTorque = 100;
-        jd.enableLimit = true;
+        jd.maxMotorTorque = 100;
+        //jd.enableLimit = true;
         jd.enableMotor = true;
         return (b2RevoluteJoint*)m_world->CreateJoint(&jd);
     }

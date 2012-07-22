@@ -17,6 +17,8 @@
 
 @synthesize window;
 
+@synthesize timeRemains;
+
 - (void) removeStartupFlicker
 {
 	//

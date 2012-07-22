@@ -10,7 +10,7 @@
 // Import the interfaces
 #import "HelloWorldLayer.h"
 #import "GameOverLayer.h"
-
+#import "AppDelegate.h"
 
 //Pixel to metres ratio. Box2D uses metres as the unit for measurement.
 //This ratio defines how many pixels correspond to 1 Box2D "metre"
@@ -110,10 +110,7 @@ enum {
         [self setupSenario];
         
         //********************//
-        timerLabel = [CCLabelTTF labelWithString:@"00:000" fontName:@"Marker Felt" fontSize:24];
-        timerLabel.position = ccp(50, 300);
-        [self addChild:timerLabel];
-        timer = 0;
+
         
 		[self schedule: @selector(tick:)];
 	}
@@ -151,6 +148,11 @@ enum {
         menu.visible = NO;
         [self addChild:menu];
     }
+    
+    ////// Timer Label ////
+    timerLabel = [CCLabelTTF labelWithString:@"00:000" fontName:@"Marker Felt" fontSize:24];
+    timerLabel.position = ccp(50, 300);
+    [self addChild:timerLabel];
 }
 
 -(void) draw
@@ -174,19 +176,28 @@ enum {
 
 -(void) setupSenario {
    
-    sensor_fail = _obstacles->newStar(b2Vec2(9, 5), .6f, NULL, b2Vec2(.1f, 0), 0);
+    sensor_fail = _obstacles->newStar(b2Vec2(1, 6), .6f, NULL, b2Vec2(.12f, 0), 0);
     sensor_win = _obstacles->newStar(b2Vec2(4, 7), .6f, NULL, b2Vec2(0, 0), 0);
 
     _obstacles->newStaticField(b2Vec2(1, .1f), b2Vec2(5, 3), .1f * b2_pi, NULL);
     _obstacles->newStaticField(b2Vec2(1, .1f), b2Vec2(6.5, 3), -.1f * b2_pi, NULL);
-    
+    _obstacles->newStaticField(b2Vec2(1.5, .1f), b2Vec2(10.5, 3.2), .13f * b2_pi, NULL);
     _obstacles->newStaticField(b2Vec2(.5f, .5f), b2Vec2(7, 5), 0.2f * b2_pi, NULL);
     
-    _obstacles->newTriangleStaticField(b2Vec2(.5f, .5f), b2Vec2(9.3f, 5), 0.25f * b2_pi, NULL);
+    _obstacles->newTriangleStaticField(b2Vec2(.5f, .5f), b2Vec2(9.3f, 5), 0.35f * b2_pi, NULL);
+    _obstacles->newTriangleStaticField(b2Vec2(.5f, .5f), b2Vec2(3, 7.5), 0.25f * b2_pi, NULL);
+    _obstacles->newTriangleStaticField(b2Vec2(.5f, .5f), b2Vec2(12, 5.5), 0.75f * b2_pi, NULL);
+    _obstacles->newTriangleStaticField(b2Vec2(.6f, .6f), b2Vec2(6, 8), 0.85f * b2_pi, NULL);
     
-    _obstacles->newSpaceRobot(b2Vec2(.6f, .1f), b2Vec2(.6f, .1f), b2Vec2(2.5, 4), b2Vec2(2.5, 4), 0, -0.75 * b2_pi, .75 * b2_pi, 0, NULL, NULL);
+    _obstacles->newSpaceRobot(b2Vec2(.6f, .1f), b2Vec2(.6f, .1f), b2Vec2(2.5, 4), b2Vec2(2, 4.2), 0, -0.95 * b2_pi, .95 * b2_pi, 1.5, NULL, NULL);
+    _obstacles->newSpaceRobot(b2Vec2(.2f, .2f), b2Vec2(.8f, .1f), b2Vec2(8, 4), b2Vec2(8, 4.2), 0, -0.15 * b2_pi, .95 * b2_pi, 1.2, NULL, NULL);
+    _obstacles->newSpaceRobot(b2Vec2(.2f, .2f), b2Vec2(.8f, .1f), b2Vec2(12, 7), b2Vec2(12, 7), 0, -0.15 * b2_pi, .95 * b2_pi, 3.2, NULL, NULL);
+    _obstacles->newSpaceRobot(b2Vec2(.1f, .1f), b2Vec2(.8f, .1f), b2Vec2(10, 7.2), b2Vec2(10, 7.2), 0, -0.15 * b2_pi, .95 * b2_pi, -3.2, NULL, NULL);
     
     [self addBall:ccp(240, 10)];
+    
+    timer = 1000;
+
 }
 
 -(void) addGround {
@@ -339,16 +350,13 @@ enum {
 	}
     
     
-    if ([self checkStar:sensor_fail]) {
-        CCLOG(@"You Failed");
+    if ([self checkStar:sensor_fail] || [self checkStar:sensor_win] || timer <= 0) {
+        //((AppDelegate*)[UIApplication sharedApplication]).timeRemains = [NSNumber numberWithFloat:timer];
         [[CCDirector sharedDirector] replaceScene: [CCTransitionSlideInB transitionWithDuration:0.5f scene:[GameOverLayer scene]]];
-    } else if ([self checkStar:sensor_win]) {
-        CCLOG(@"You Win");
-        [[CCDirector sharedDirector] replaceScene: [CCTransitionSlideInB transitionWithDuration:0.5f scene:[GameOverLayer scene]]];
-    }
+    } 
     
     //update timer
-    timer += dt;
+    timer -= dt;
     [timerLabel setString:[NSString stringWithFormat:@"%2.3f", timer]];
 }
 
@@ -384,7 +392,7 @@ enum {
 	static float prevX=0, prevY=0;
 	
 	//#define kFilterFactor 0.05f
-#define kFilterFactor 1.0f	// don't use filter. the code is here just as an example
+#define kFilterFactor 0.05f	// don't use filter. the code is here just as an example
 	
 	float accelX = (float) acceleration.x * kFilterFactor + (1- kFilterFactor)*prevX;
 	float accelY = (float) acceleration.y * kFilterFactor + (1- kFilterFactor)*prevY;
