@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>angle</key>
-	<integer>180</integer>
+	<integer>90</integer>
 	<key>angleVariance</key>
 	<real>0</real>
 	<key>blendFuncDestination</key>
@@ -67,15 +67,15 @@
 	<key>rotationStartVariance</key>
 	<real>0</real>
 	<key>sourcePositionVariancex</key>
-	<real>0</real>
+	<integer>240</integer>
 	<key>sourcePositionVariancey</key>
-	<integer>160</integer>
+	<integer>0</integer>
 	<key>sourcePositionx</key>
-	<integer>480</integer>
+	<integer>240</integer>
 	<key>sourcePositiony</key>
-	<integer>160</integer>
+	<integer>0</integer>
 	<key>speed</key>
-	<integer>300</integer>
+	<integer>200</integer>
 	<key>speedVariance</key>
 	<integer>0</integer>
 	<key>startColorAlpha</key>
