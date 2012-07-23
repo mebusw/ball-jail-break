@@ -351,8 +351,8 @@ enum {
     
     
     if ([self checkStar:sensor_fail] || [self checkStar:sensor_win] || timer <= 0) {
-        //((AppDelegate*)[UIApplication sharedApplication]).timeRemains = [NSNumber numberWithFloat:timer];
-        [[CCDirector sharedDirector] replaceScene: [CCTransitionSlideInB transitionWithDuration:0.5f scene:[GameOverLayer scene]]];
+        ((AppDelegate*)[[UIApplication sharedApplication] delegate]).timeRemains = [NSNumber numberWithFloat:timer];
+        [[CCDirector sharedDirector] replaceScene: [CCTransitionFade transitionWithDuration:0.5f scene:[GameOverLayer scene]]];
     } 
     
     //update timer

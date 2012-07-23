@@ -56,8 +56,10 @@
 }
 
 -(void) setupMenus {
-//    CCLabelTTF *scoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"Score: %d", [((AppDelegate*)[UIApplication sharedApplication]).timeRemains floatValue]* 1000] fontName:@"Marker Felt" fontSize:32];
-    CCLabelTTF *scoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"Score: %d", 1000] fontName:@"Marker Felt" fontSize:32];
+
+    float timeRemains = [((AppDelegate*)[[UIApplication sharedApplication] delegate]).timeRemains floatValue];
+    CCLOG(@"%f", timeRemains);
+    CCLabelTTF *scoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"Score: %f", timeRemains * 10.0f] fontName:@"Marker Felt" fontSize:32];
     scoreLabel.position = ccp(240, 100);
     [self addChild:scoreLabel];
     
