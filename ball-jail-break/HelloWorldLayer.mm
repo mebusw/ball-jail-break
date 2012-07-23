@@ -11,6 +11,7 @@
 #import "HelloWorldLayer.h"
 #import "GameOverLayer.h"
 #import "AppDelegate.h"
+#import "SimpleAudioEngine.h"
 
 //Pixel to metres ratio. Box2D uses metres as the unit for measurement.
 //This ratio defines how many pixels correspond to 1 Box2D "metre"
@@ -109,6 +110,7 @@ enum {
         
         [self setupSenario];
         
+        [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"background-music-aac.caf" loop:YES];
         //********************//
 
         
