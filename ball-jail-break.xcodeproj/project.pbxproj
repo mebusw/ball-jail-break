@@ -186,6 +186,7 @@
 		8F3F833715BD94C600583654 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		8F3F833915BD94E000583654 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8F3F833B15BD94F800583654 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		8F3F834615BDA4BD00583654 /* Levels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Levels.h; sourceTree = "<group>"; };
 		8F7E402715A96D9200029126 /* ball-jail-break.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ball-jail-break.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F7E402B15A96D9200029126 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8F7E402D15A96D9200029126 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -595,6 +596,7 @@
 				8FF693AF15BC057C00A13EB6 /* GameOverLayer.h */,
 				8FF693B015BC057C00A13EB6 /* GameOverLayer.mm */,
 				8F0AF2BC15B19D2900D78C7D /* Obstacles.h */,
+				8F3F834615BDA4BD00583654 /* Levels.h */,
 				8F7E420C15A96D9500029126 /* GLES-Render.h */,
 				8F7E420D15A96D9500029126 /* GLES-Render.mm */,
 				8F7E420F15A96D9500029126 /* GameConfig.h */,

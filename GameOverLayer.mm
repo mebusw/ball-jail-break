@@ -63,13 +63,19 @@
     scoreLabel.position = ccp(240, 100);
     [self addChild:scoreLabel];
     
-    CCLabelTTF *label = [CCLabelTTF labelWithString:@"Play Again" fontName:@"Marker Felt" fontSize:32];
-    CCMenuItemLabel *itmStart = [CCMenuItemLabel itemWithLabel:label block:^(id sender) {
+    CCLabelTTF *lblAgain = [CCLabelTTF labelWithString:@"Play Again" fontName:@"Marker Felt" fontSize:32];
+    CCMenuItemLabel *itmAgain = [CCMenuItemLabel itemWithLabel:lblAgain block:^(id sender) {
         CCLOG(@"in restart block");
         [[CCDirector sharedDirector] replaceScene: [CCTransitionFade transitionWithDuration:0.5f scene:[HelloWorldLayer scene]]];
     }];
-    CCMenu *menu = [CCMenu menuWithItems:itmStart, nil];
-    menu.position = ccp(240, 200);
+    CCLabelTTF *lblNext = [CCLabelTTF labelWithString:@"Next Level" fontName:@"Marker Felt" fontSize:32];
+    CCMenuItemLabel *itmNext = [CCMenuItemLabel itemWithLabel:lblNext block:^(id sender) {
+        CCLOG(@"in next block");
+        [[CCDirector sharedDirector] replaceScene: [CCTransitionFade transitionWithDuration:0.5f scene:[HelloWorldLayer scene]]];
+    }];
+    CCMenu *menu = [CCMenu menuWithItems:itmAgain, itmNext, nil];
+    [menu alignItemsVertically];
+    menu.position = ccp(240, 160);
     menu.visible = YES;
     [self addChild:menu];
 }
