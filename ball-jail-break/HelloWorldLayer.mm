@@ -111,6 +111,13 @@ enum {
         [self setupSenario];
         
         [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"background-music-aac.caf" loop:YES];
+        
+        NSArray *starsArray = [NSArray arrayWithObjects:@"Stars1.plist", @"Stars2.plist", @"Stars3.plist", nil];
+        for(NSString *stars in starsArray) {        
+            CCParticleSystemQuad *starsEffect = [CCParticleSystemQuad particleWithFile:stars];        
+            [self addChild:starsEffect z:1];
+        }
+        
         //********************//
 
         

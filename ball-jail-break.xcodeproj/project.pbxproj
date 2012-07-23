@@ -163,6 +163,9 @@
 		8F7E421115A96D9500029126 /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F7E421015A96D9500029126 /* blocks.png */; };
 		8F7E421C15A9ABE500029126 /* ball32.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F7E421B15A9ABE500029126 /* ball32.png */; };
 		8FC9BC2415BD7FD80062A366 /* background-music-aac.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8FC9BC2315BD7FD80062A366 /* background-music-aac.caf */; };
+		8FC9BC3215BD80F40062A366 /* Stars1.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8FC9BC2F15BD80F40062A366 /* Stars1.plist */; };
+		8FC9BC3315BD80F40062A366 /* Stars2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8FC9BC3015BD80F40062A366 /* Stars2.plist */; };
+		8FC9BC3415BD80F40062A366 /* Stars3.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8FC9BC3115BD80F40062A366 /* Stars3.plist */; };
 		8FF693B115BC057C00A13EB6 /* GameOverLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8FF693B015BC057C00A13EB6 /* GameOverLayer.mm */; };
 /* End PBXBuildFile section */
 
@@ -484,6 +487,9 @@
 		8F7E421015A96D9500029126 /* blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blocks.png; path = Resources/blocks.png; sourceTree = "<group>"; };
 		8F7E421B15A9ABE500029126 /* ball32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ball32.png; path = Resources/ball32.png; sourceTree = "<group>"; };
 		8FC9BC2315BD7FD80062A366 /* background-music-aac.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "background-music-aac.caf"; sourceTree = "<group>"; };
+		8FC9BC2F15BD80F40062A366 /* Stars1.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stars1.plist; path = Resources/Stars1.plist; sourceTree = "<group>"; };
+		8FC9BC3015BD80F40062A366 /* Stars2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stars2.plist; path = Resources/Stars2.plist; sourceTree = "<group>"; };
+		8FC9BC3115BD80F40062A366 /* Stars3.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stars3.plist; path = Resources/Stars3.plist; sourceTree = "<group>"; };
 		8FF693AF15BC057C00A13EB6 /* GameOverLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameOverLayer.h; path = ../GameOverLayer.h; sourceTree = "<group>"; };
 		8FF693B015BC057C00A13EB6 /* GameOverLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GameOverLayer.mm; path = ../GameOverLayer.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -566,6 +572,9 @@
 		8F7E403C15A96D9200029126 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8FC9BC2F15BD80F40062A366 /* Stars1.plist */,
+				8FC9BC3015BD80F40062A366 /* Stars2.plist */,
+				8FC9BC3115BD80F40062A366 /* Stars3.plist */,
 				8FC9BC2315BD7FD80062A366 /* background-music-aac.caf */,
 				8F7E421B15A9ABE500029126 /* ball32.png */,
 				8F7E403D15A96D9200029126 /* Default.png */,
@@ -1087,6 +1096,9 @@
 				8F7E421115A96D9500029126 /* blocks.png in Resources */,
 				8F7E421C15A9ABE500029126 /* ball32.png in Resources */,
 				8FC9BC2415BD7FD80062A366 /* background-music-aac.caf in Resources */,
+				8FC9BC3215BD80F40062A366 /* Stars1.plist in Resources */,
+				8FC9BC3315BD80F40062A366 /* Stars2.plist in Resources */,
+				8FC9BC3415BD80F40062A366 /* Stars3.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

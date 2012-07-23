@@ -59,7 +59,7 @@
 
     float timeRemains = [((AppDelegate*)[[UIApplication sharedApplication] delegate]).timeRemains floatValue];
     CCLOG(@"%f", timeRemains);
-    CCLabelTTF *scoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"Score: %f", timeRemains * 10.0f] fontName:@"Marker Felt" fontSize:32];
+    CCLabelTTF *scoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"Score: %.0f", timeRemains * 10.0f] fontName:@"Marker Felt" fontSize:32];
     scoreLabel.position = ccp(240, 100);
     [self addChild:scoreLabel];
     
