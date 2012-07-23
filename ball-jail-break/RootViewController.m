@@ -16,10 +16,14 @@
 #import "RootViewController.h"
 #import "GameConfig.h"
 
-
-#define GAD_PUBLISHER_ID @"fb91503e73fe427d"
+#import "GADBannerView.h"
+#define GAD_PUBLISHER_ID @"a14f791eb38987e"
+#define kFullVersionUnlocked @"FullVersionUnlocked"
+//#define PRODUCT_ID_FULL_VERSION  @"A1"
 
 @implementation RootViewController
+
+GADBannerView *gAdBanner;
 
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -37,12 +41,13 @@
  }
  */
 
-/*
- // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
- - (void)viewDidLoad {
+
+// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+- (void)viewDidLoad {
 	[super viewDidLoad];
- }
- */
+    [self addGAD];
+}
+
 
 
 // Override to allow orientations other than the default portrait orientation.
@@ -149,6 +154,43 @@
 
 - (void)dealloc {
     [super dealloc];
+}
+
+#pragma mark - Google Ad
+
+-(void) addGAD {
+    bool isFullVersionUnlocked = [[NSUserDefaults standardUserDefaults] boolForKey:kFullVersionUnlocked];
+    if (1) {
+        gAdBanner = [[GADBannerView alloc] initWithFrame:CGRectMake(100.0, -100, GAD_SIZE_320x50.width, GAD_SIZE_320x50.height)];
+        gAdBanner.adUnitID = GAD_PUBLISHER_ID;
+        gAdBanner.delegate = (id)self;
+        [gAdBanner setRootViewController:self];
+        [self.view addSubview:gAdBanner];
+        
+        GADRequest *request = [GADRequest request];
+        
+        /* Make the request for a test ad when running on simulator */
+        request.testDevices = [NSArray arrayWithObjects:GAD_SIMULATOR_ID, nil];
+        
+        [gAdBanner loadRequest:request];
+    }
+}
+
+- (void)adViewDidReceiveAd:(GADBannerView *)bannerView {
+    [UIView beginAnimations:@"BannerSlide" context:nil];
+    bannerView.frame = CGRectMake(100.0,
+                                  //self.view.frame.size.height -
+                                  //bannerView.frame.size.height,
+                                  0.0,
+                                  bannerView.frame.size.width,
+                                  bannerView.frame.size.height);
+    [UIView commitAnimations];
+    NSLog(@"gAd: hasAutoRefreshed=%d", [bannerView hasAutoRefreshed]);
+}
+
+- (void)adView:(GADBannerView *)bannerView didFailToReceiveAdWithError:(GADRequestError *)error {
+    NSLog(@"gAd: adView:didFailToReceiveAdWithError:%@", [error localizedDescription]);
+    
 }
 
 

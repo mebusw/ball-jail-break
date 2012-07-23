@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		8F0E8FA415A9E53300045045 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F0E8FA315A9E53300045045 /* GameKit.framework */; };
+		8F3F833615BD949700583654 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F3F833515BD949700583654 /* libGoogleAdMobAds.a */; };
+		8F3F833815BD94C600583654 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F3F833715BD94C600583654 /* Security.framework */; };
+		8F3F833A15BD94E000583654 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F3F833915BD94E000583654 /* SystemConfiguration.framework */; };
+		8F3F833C15BD94F800583654 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F3F833B15BD94F800583654 /* MessageUI.framework */; };
 		8F7E402C15A96D9200029126 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7E402B15A96D9200029126 /* QuartzCore.framework */; };
 		8F7E402E15A96D9200029126 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7E402D15A96D9200029126 /* OpenGLES.framework */; };
 		8F7E403015A96D9200029126 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7E402F15A96D9200029126 /* OpenAL.framework */; };
@@ -172,6 +176,16 @@
 /* Begin PBXFileReference section */
 		8F0AF2BC15B19D2900D78C7D /* Obstacles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Obstacles.h; sourceTree = "<group>"; };
 		8F0E8FA315A9E53300045045 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		8F3F832F15BD949700583654 /* GADBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADBannerView.h; sourceTree = "<group>"; };
+		8F3F833015BD949700583654 /* GADBannerViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADBannerViewDelegate.h; sourceTree = "<group>"; };
+		8F3F833115BD949700583654 /* GADInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADInterstitial.h; sourceTree = "<group>"; };
+		8F3F833215BD949700583654 /* GADInterstitialDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADInterstitialDelegate.h; sourceTree = "<group>"; };
+		8F3F833315BD949700583654 /* GADRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADRequest.h; sourceTree = "<group>"; };
+		8F3F833415BD949700583654 /* GADRequestError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADRequestError.h; sourceTree = "<group>"; };
+		8F3F833515BD949700583654 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAdMobAds.a; sourceTree = "<group>"; };
+		8F3F833715BD94C600583654 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		8F3F833915BD94E000583654 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		8F3F833B15BD94F800583654 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		8F7E402715A96D9200029126 /* ball-jail-break.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ball-jail-break.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F7E402B15A96D9200029126 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8F7E402D15A96D9200029126 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -499,6 +513,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F3F833C15BD94F800583654 /* MessageUI.framework in Frameworks */,
+				8F3F833A15BD94E000583654 /* SystemConfiguration.framework in Frameworks */,
+				8F3F833815BD94C600583654 /* Security.framework in Frameworks */,
 				8F0E8FA415A9E53300045045 /* GameKit.framework in Frameworks */,
 				8F7E402C15A96D9200029126 /* QuartzCore.framework in Frameworks */,
 				8F7E402E15A96D9200029126 /* OpenGLES.framework in Frameworks */,
@@ -508,12 +525,27 @@
 				8F7E403615A96D9200029126 /* UIKit.framework in Frameworks */,
 				8F7E403815A96D9200029126 /* Foundation.framework in Frameworks */,
 				8F7E403A15A96D9200029126 /* CoreGraphics.framework in Frameworks */,
+				8F3F833615BD949700583654 /* libGoogleAdMobAds.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8F3F832D15BD949000583654 /* GAD */ = {
+			isa = PBXGroup;
+			children = (
+				8F3F832F15BD949700583654 /* GADBannerView.h */,
+				8F3F833015BD949700583654 /* GADBannerViewDelegate.h */,
+				8F3F833115BD949700583654 /* GADInterstitial.h */,
+				8F3F833215BD949700583654 /* GADInterstitialDelegate.h */,
+				8F3F833315BD949700583654 /* GADRequest.h */,
+				8F3F833415BD949700583654 /* GADRequestError.h */,
+				8F3F833515BD949700583654 /* libGoogleAdMobAds.a */,
+			);
+			name = GAD;
+			sourceTree = "<group>";
+		};
 		8F7E401C15A96D9200029126 = {
 			isa = PBXGroup;
 			children = (
@@ -534,6 +566,9 @@
 		8F7E402A15A96D9200029126 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8F3F833B15BD94F800583654 /* MessageUI.framework */,
+				8F3F833915BD94E000583654 /* SystemConfiguration.framework */,
+				8F3F833715BD94C600583654 /* Security.framework */,
 				8F0E8FA315A9E53300045045 /* GameKit.framework */,
 				8F7E402B15A96D9200029126 /* QuartzCore.framework */,
 				8F7E402D15A96D9200029126 /* OpenGLES.framework */,
@@ -550,6 +585,7 @@
 		8F7E403B15A96D9200029126 /* ball-jail-break */ = {
 			isa = PBXGroup;
 			children = (
+				8F3F832D15BD949000583654 /* GAD */,
 				8F7E420315A96D9500029126 /* AppDelegate.h */,
 				8F7E420415A96D9500029126 /* AppDelegate.mm */,
 				8F7E420615A96D9500029126 /* RootViewController.h */,
@@ -1304,6 +1340,10 @@
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "ball-jail-break/Resources/Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/ball-jail-break\"",
+				);
 				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1324,6 +1364,10 @@
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "ball-jail-break/Resources/Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/ball-jail-break\"",
+				);
 				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

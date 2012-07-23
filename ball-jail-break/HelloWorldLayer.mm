@@ -224,7 +224,7 @@ enum {
     ground->CreateFixture(&groundBox,0);
     
     // top
-    groundBox.SetAsEdge(b2Vec2(0, screenSize.height/PTM_RATIO - 1.0f), b2Vec2(screenSize.width/PTM_RATIO, screenSize.height/PTM_RATIO - 1.0f));
+    groundBox.SetAsEdge(b2Vec2(0, screenSize.height/PTM_RATIO - 1.5f), b2Vec2(screenSize.width/PTM_RATIO, screenSize.height/PTM_RATIO - 1.5f));
     ground->CreateFixture(&groundBox,0);
     
     // left

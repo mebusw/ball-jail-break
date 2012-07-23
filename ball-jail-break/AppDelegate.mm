@@ -97,9 +97,11 @@
 	
 	// make the OpenGLView a child of the view controller
 	[viewController setView:glView];
-	
+	[viewController addGAD];
+    
 	// make the View Controller a child of the main window
 	[window addSubview: viewController.view];
+    
 	
 	[window makeKeyAndVisible];
 	
