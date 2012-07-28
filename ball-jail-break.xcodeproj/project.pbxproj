@@ -172,6 +172,7 @@
 		8FC9BC3415BD80F40062A366 /* Stars3.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8FC9BC3115BD80F40062A366 /* Stars3.plist */; };
 		8FDB827A15C3805700B4EFDF /* ufo.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FDB827815C3805700B4EFDF /* ufo.png */; };
 		8FDB827D15C380D700B4EFDF /* blackHole.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FDB827C15C380D700B4EFDF /* blackHole.png */; };
+		8FDB828315C386D600B4EFDF /* Senarios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8FDB828215C386D600B4EFDF /* Senarios.mm */; };
 		8FF693B115BC057C00A13EB6 /* GameOverLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8FF693B015BC057C00A13EB6 /* GameOverLayer.mm */; };
 /* End PBXBuildFile section */
 
@@ -509,6 +510,8 @@
 		8FC9BC3115BD80F40062A366 /* Stars3.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stars3.plist; path = Resources/Stars3.plist; sourceTree = "<group>"; };
 		8FDB827815C3805700B4EFDF /* ufo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ufo.png; path = Resources/ufo.png; sourceTree = "<group>"; };
 		8FDB827C15C380D700B4EFDF /* blackHole.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blackHole.png; path = Resources/blackHole.png; sourceTree = "<group>"; };
+		8FDB828115C386D600B4EFDF /* Senarios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Senarios.h; sourceTree = "<group>"; };
+		8FDB828215C386D600B4EFDF /* Senarios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Senarios.mm; sourceTree = "<group>"; };
 		8FF693AF15BC057C00A13EB6 /* GameOverLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameOverLayer.h; path = ../GameOverLayer.h; sourceTree = "<group>"; };
 		8FF693B015BC057C00A13EB6 /* GameOverLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GameOverLayer.mm; path = ../GameOverLayer.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -604,6 +607,8 @@
 				8F7E420C15A96D9500029126 /* GLES-Render.h */,
 				8F7E420D15A96D9500029126 /* GLES-Render.mm */,
 				8F7E420F15A96D9500029126 /* GameConfig.h */,
+				8FDB828115C386D600B4EFDF /* Senarios.h */,
+				8FDB828215C386D600B4EFDF /* Senarios.mm */,
 				8F7E403C15A96D9200029126 /* Resources */,
 				8F7E405015A96D9200029126 /* libs */,
 				8F7E41FF15A96D9500029126 /* Supporting Files */,
@@ -1291,6 +1296,7 @@
 				8F7E420B15A96D9500029126 /* HelloWorldLayer.mm in Sources */,
 				8F7E420E15A96D9500029126 /* GLES-Render.mm in Sources */,
 				8FF693B115BC057C00A13EB6 /* GameOverLayer.mm in Sources */,
+				8FDB828315C386D600B4EFDF /* Senarios.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

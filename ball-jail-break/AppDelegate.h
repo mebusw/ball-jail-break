@@ -18,5 +18,6 @@
 @property (nonatomic, retain) UIWindow *window;
 
 @property (nonatomic, retain) NSNumber *timeRemains;
+@property (nonatomic, retain) NSNumber *currentLevel;
 
 @end

@@ -12,6 +12,7 @@
 #import "Box2D.h"
 #import "GLES-Render.h"
 #import "Obstacles.h"
+#import "Senarios.h"
 
 // HelloWorldLayer
 @interface HelloWorldLayer : CCLayer
@@ -24,8 +25,8 @@
     b2Fixture *sensor_win;
     b2Fixture *ball;
     
-    //Obstacles *_obstacles;
     Obstacles *_obstacles;
+    Senarios *_senarios;
     
     //timer
     CCLabelTTF *timerLabel;

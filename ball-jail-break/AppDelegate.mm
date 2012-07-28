@@ -17,7 +17,7 @@
 
 @synthesize window;
 
-@synthesize timeRemains;
+@synthesize timeRemains, currentLevel;
 
 - (void) removeStartupFlicker
 {
@@ -115,6 +115,7 @@
 	[self removeStartupFlicker];
 	
 	// Run the intro Scene
+    currentLevel = [NSNumber numberWithInt:1];
 	[[CCDirector sharedDirector] runWithScene: [HelloWorldLayer scene]];
 }
 
