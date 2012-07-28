@@ -82,10 +82,10 @@ enum {
 		
 		uint32 flags = 0;
 		flags += b2DebugDraw::e_shapeBit;
-		flags += b2DebugDraw::e_jointBit;
+//		flags += b2DebugDraw::e_jointBit;
 //		flags += b2DebugDraw::e_aabbBit;
-		flags += b2DebugDraw::e_pairBit;
-		flags += b2DebugDraw::e_centerOfMassBit;
+//		flags += b2DebugDraw::e_pairBit;
+//		flags += b2DebugDraw::e_centerOfMassBit;
 		m_debugDraw->SetFlags(flags);		
 
 		//****************//
@@ -186,7 +186,9 @@ enum {
 
 -(void) setupSenario {
    
-    sensor_fail = _obstacles->newStar(b2Vec2(1, 6), .6f, NULL, b2Vec2(.12f, 0), 0);
+    CCSprite *blackHole = [CCSprite spriteWithFile:@"blackHole.png"];
+    [self addChild:blackHole];
+    sensor_fail = _obstacles->newStar(b2Vec2(1, 6), .6f, blackHole, b2Vec2(.12f, 0), 0);
     sensor_win = _obstacles->newStar(b2Vec2(4, 7), .6f, NULL, b2Vec2(0, 0), 0);
 
     _obstacles->newStaticField(b2Vec2(1, .1f), b2Vec2(5, 3), .1f * b2_pi, NULL);
@@ -307,7 +309,8 @@ enum {
 
 -(void) addBall:(CGPoint)p {
     CCLOG(@"");
-    CCSprite *ballSp = [CCSprite spriteWithFile:@"ball32.png"];
+//    CCSprite *ballSp = [CCSprite spriteWithFile:@"ball32.png"];
+    CCSprite *ballSp = [CCSprite spriteWithFile:@"ufo.png"];
     ballSp.tag = 99;
     [self addChild:ballSp];
     
