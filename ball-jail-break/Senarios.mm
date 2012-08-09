@@ -34,6 +34,11 @@
     _obstacles->newStaticField(b2Vec2(1.5, .1f), b2Vec2(10.5, 3.2), .13f * b2_pi, NULL);
     _obstacles->newStaticField(b2Vec2(.5f, .5f), b2Vec2(7, 5), 0.2f * b2_pi, NULL);
     
+    
+    for (int i = 0; i<50;i++) {
+        _obstacles->newTriangleStaticField(b2Vec2(.5f, .5f), b2Vec2(9.3f, 5), 0.35f * b2_pi, NULL);
+        
+    }
     _obstacles->newTriangleStaticField(b2Vec2(.5f, .5f), b2Vec2(9.3f, 5), 0.35f * b2_pi, NULL);
     _obstacles->newTriangleStaticField(b2Vec2(.5f, .5f), b2Vec2(3, 7.5), 0.25f * b2_pi, NULL);
     _obstacles->newTriangleStaticField(b2Vec2(.5f, .5f), b2Vec2(12, 5.5), 0.75f * b2_pi, NULL);
@@ -44,7 +49,15 @@
     _obstacles->newSpaceRobot(b2Vec2(.2f, .2f), b2Vec2(.8f, .1f), b2Vec2(12, 7), b2Vec2(12, 7), 0, -0.15 * b2_pi, .95 * b2_pi, 3.2, NULL, NULL);
     _obstacles->newSpaceRobot(b2Vec2(.1f, .1f), b2Vec2(.8f, .1f), b2Vec2(10, 7.2), b2Vec2(10, 7.2), 0, -0.15 * b2_pi, .95 * b2_pi, -3.2, NULL, NULL);
     
+    for (int i = 0; i < 200; i++) {
+        _obstacles->newWaterDrop(.05f, b2Vec2(5, 1), NULL);
+    }
     
     *timer = 1000;
 }
+
+-(void) senario_2WithTimer:(float32*)timer fail:(b2Fixture**)sensor_fail win:(b2Fixture**)sensor_win  {
+    
+}
+
 @end

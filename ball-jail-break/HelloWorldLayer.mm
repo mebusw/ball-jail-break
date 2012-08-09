@@ -229,7 +229,7 @@ enum {
 	int idy = (CCRANDOM_0_1() > .5 ? 0:1);
 	CCSprite *sprite = [CCSprite spriteWithBatchNode:batch rect:CGRectMake(32 * idx,32 * idy,32,32)];
     sprite.tag = 55;
-	[batch addChild:sprite];
+	//[batch addChild:sprite];
 	
 	sprite.position = ccp( p.x, p.y);
 	
@@ -241,12 +241,12 @@ enum {
 	bodyDef.position.Set(p.x/PTM_RATIO, p.y/PTM_RATIO);
 	bodyDef.position.Set(p.x/PTM_RATIO, p.y/PTM_RATIO);
     
-	bodyDef.userData = sprite;
+	//bodyDef.userData = sprite;
 	b2Body *body = world->CreateBody(&bodyDef);
 	
 	// Define another box shape for our dynamic body.
 	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(.5f, .5f);//These are mid points for our 1m box
+	dynamicBox.SetAsBox(.01f, .01f);//These are mid points for our 1m box
 	
 	// Define the dynamic body fixture.
 	b2FixtureDef fixtureDef;

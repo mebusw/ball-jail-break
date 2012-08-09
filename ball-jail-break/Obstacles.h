@@ -66,6 +66,28 @@ public:
         return body;
     }
     
+
+    /**
+     * add water drop as dynamic body
+     */
+    b2Body* newWaterDrop(float32 radius, b2Vec2 pos, void *sprite) {
+        b2BodyDef bodyDef;
+        bodyDef.position.Set(pos.x, pos.y);
+        bodyDef.userData = sprite;
+        bodyDef.type = b2_dynamicBody;
+        b2Body *body = m_world->CreateBody(&bodyDef);
+        
+        b2CircleShape circleDef;
+        circleDef.m_radius = radius;
+        
+        b2FixtureDef fixtureDef;
+        fixtureDef.shape = &circleDef;
+        fixtureDef.density = 1.0f;
+        fixtureDef.friction = 0.1f;
+        body->CreateFixture(&fixtureDef);
+        return body;
+    }
+    
     /**
      * add triangle static field as static body
      */
