@@ -49,9 +49,11 @@
     _obstacles->newSpaceRobot(b2Vec2(.2f, .2f), b2Vec2(.8f, .1f), b2Vec2(12, 7), b2Vec2(12, 7), 0, -0.15 * b2_pi, .95 * b2_pi, 3.2, NULL, NULL);
     _obstacles->newSpaceRobot(b2Vec2(.1f, .1f), b2Vec2(.8f, .1f), b2Vec2(10, 7.2), b2Vec2(10, 7.2), 0, -0.15 * b2_pi, .95 * b2_pi, -3.2, NULL, NULL);
     
-    for (int i = 0; i < 200; i++) {
-        _obstacles->newWaterDrop(.05f, b2Vec2(5, 1), NULL);
+    for (int i = 0; i < 100; i++) {
+        _obstacles->newWaterDrop(.05f, b2Vec2(5, 1), NULL)->ApplyForce(b2Vec2(0.5, -0.1), b2Vec2(10, 10));
     }
+    
+    
     
     *timer = 1000;
 }
